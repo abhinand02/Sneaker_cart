@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746985630960",
+    "project_id": "sneaker-cart",
+    "storage_bucket": "sneaker-cart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746985630960:android:5af9e1bcc5eba9d2a8a635",
+        "android_client_info": {
+          "package_name": "com.example.sneaker_cart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746985630960-tglrh8mai9t5vntffh01g2f8sst6rgk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRMa87QYv96xamMiQ0E8b_SaTZ6ueXj3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746985630960-tglrh8mai9t5vntffh01g2f8sst6rgk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
