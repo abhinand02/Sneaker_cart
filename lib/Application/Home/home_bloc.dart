@@ -14,8 +14,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_Started>((event, emit) async{
       // print('hi');
       final data = await DatabaseServic().getData();
-      final newArrivals = await DatabaseServic().getNewArrival('new', true);
-      log(data.toString());
+      final newArrivals = await DatabaseServic().getNewArrival(field: 'new',condition: true, collectionObject: DatabaseServic().productCollection);
+      // log(data.toString());
       emit(HomeState(productList: data, newArrival: newArrivals));
     });
   }

@@ -14,11 +14,11 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
    int currentIndex = 0;
- final _pages = const [
-   HomePage(),
-   HomePage(),
+ final _pages =  [
+   const HomePage(),
+  const HomePage(),
    MyCartScreen(),
-   FavouriteScreen(),
+  const FavouriteScreen(),
  ];
   @override
   Widget build(BuildContext context) {

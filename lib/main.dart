@@ -2,8 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
+import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
+import 'package:sneaker_cart/Application/address/address_bloc.dart';
 import 'package:sneaker_cart/Screens/Splash%20Screen/splash_screen.dart';
 
 
@@ -21,7 +24,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> HomeBloc()),
-        BlocProvider(create: (context)=> ProductDetailsBloc())
+        BlocProvider(create: (context)=> ProductDetailsBloc()),
+        BlocProvider(create: (context)=> CartBloc()),
+        BlocProvider(create: (context)=> AddressBloc()),
+        BlocProvider(create: (context)=> CheckoutBloc()),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

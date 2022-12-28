@@ -33,7 +33,6 @@ class MenuPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 26, 37, 48),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Spacer(),
           const ProfileWidget(),

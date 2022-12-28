@@ -6,6 +6,7 @@ import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dar
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/product_details.dart';
 import '../../Constants/colors.dart';
+import '../../Services/database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -143,6 +144,7 @@ class HomeHorizontalListView extends StatelessWidget {
             // print((data?.docs[0].data() as Map<String, dynamic>)['product_name']);
             return GestureDetector(
               onTap: () {
+                // DatabaseServic().getCartDetails();
                 BlocProvider.of<ProductDetailsBloc>(context).add(
                     ChangeImage(index: 0, productname: data['product_name']));
                 BlocProvider.of<ProductDetailsBloc>(context)

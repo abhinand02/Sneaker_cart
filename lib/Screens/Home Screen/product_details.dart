@@ -4,6 +4,7 @@ import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
 import 'package:sneaker_cart/Services/database.dart';
 import 'package:sneaker_cart/Widgets/appbar.dart';
+import '../../Application/Cart/cart_bloc.dart';
 import '../../Application/ProductDetails/product_details_bloc.dart';
 import '../../Constants/colors.dart';
 
@@ -191,10 +192,11 @@ class PriceAndButton extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
-          DatabaseServic().addToCart(productName: productName, image: image, size: '7', totalPrice: (int.parse(price)+40).toString(), quantity: '1').then((value) {
-            Navigator.of(context).push(
+          DatabaseServic().addToCart(productName: productName, image: image, size: '8', totalPrice: price, quantity: '1').then((value) {
+          BlocProvider.of<CartBloc>(context).add(const CartProduct());
+           Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const MyCartScreen(),
+                builder: (context) =>  MyCartScreen(),
               ),
             );
           });
