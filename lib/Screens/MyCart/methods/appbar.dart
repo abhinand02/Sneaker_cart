@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Constants/colors.dart';
 
-AppBar myCartAppBar({required String title,required BuildContext context}) {
+AppBar myCartAppBar({required String title, BuildContext? context}) {
     return AppBar(
       elevation: 0,
       toolbarHeight: 60,
@@ -13,9 +13,10 @@ AppBar myCartAppBar({required String title,required BuildContext context}) {
       centerTitle: true,
       leading: Transform.scale(
         scale: .7,
-        child: CircleAvatar(
+           child: context != null ?
+          CircleAvatar(
           backgroundColor: whiteColor,
-          child: IconButton(
+          child:  IconButton(
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               color: Colors.black,
@@ -25,7 +26,8 @@ AppBar myCartAppBar({required String title,required BuildContext context}) {
               Navigator.of(context).pop();
             },
           ),
-        ),
+        ): Container(),
       ),
     );
   }
+

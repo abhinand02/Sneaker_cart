@@ -16,10 +16,23 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             field: 'user_id',
             condition: DatabaseServic().currentUser!.uid,
             collectionObject: DatabaseServic().addressCollection);
+        final data =
+            addressList.docs[event.index].data() as Map<String, dynamic>;
         emit(
-          CheckoutState(addressList: addressList),
+          state.copyWith(
+              addressList: addressList,
+              userEmail: DatabaseServic().currentUser!.email,
+              selectedAddress: data),
         );
       },
     );
+
+    on<EditContactNumber>((event, emit) {
+      emit(state.copyWith(isEditable: event.isEditable));
+    });
+
+    on<Loading>((event, emit) {
+      emit(state.copyWith(isLoading: event.isLoading));
+    });
   }
 }

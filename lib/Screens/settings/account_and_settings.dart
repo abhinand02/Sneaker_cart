@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sneaker_cart/Constants/text.dart';
+import 'package:sneaker_cart/Screens/MyCart/payment_successful.dart';
 import 'package:sneaker_cart/Screens/settings/add_and_edit_address.dart';
 import 'package:sneaker_cart/Screens/settings/address_list.dart';
 import '../../Constants/colors.dart';
@@ -24,7 +25,7 @@ class AccountAndSettings extends StatelessWidget {
   final List<Widget> pages = [
     AddressListPage(),
     AddAndEditAddress(),
-    AddAndEditAddress(),
+    PaymentSuccessful(),
   ];
 
   @override

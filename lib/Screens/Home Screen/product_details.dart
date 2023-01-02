@@ -196,7 +196,7 @@ class PriceAndButton extends StatelessWidget {
           BlocProvider.of<CartBloc>(context).add(const CartProduct());
            Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) =>  MyCartScreen(),
+                builder: (context) =>  MyCartScreen(context1: context,),
               ),
             );
           });

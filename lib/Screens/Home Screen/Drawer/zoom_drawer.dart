@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:sneaker_cart/Orders/order_list.dart';
 import 'package:sneaker_cart/Screens/Favourite/favourite.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/Drawer/Model/menu_item.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/home_screen.dart';
@@ -36,12 +36,14 @@ class _MyHomePageState extends State<HomePage> {
   Widget getScreen(){
     switch (currentItem) {
       case MenuItems.home:
-      return HomeScreen();
+      return const HomeScreen();
       case MenuItems.favorite:
-      return FavouriteScreen();
+      return const FavouriteScreen();
       case MenuItems.accountAndSettings:
       return AccountAndSettings();
+      case MenuItems.orders:
+      return const OrderList();
     }
-    return HomeScreen();
+    return const HomeScreen();
   }
 }

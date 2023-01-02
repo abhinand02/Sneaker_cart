@@ -26,9 +26,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<SubTotal>((event, emit) async{
       final user = DatabaseServic().currentUser;
       final result = await DatabaseServic().getNewArrival(field: 'user_id',condition: user!.uid, collectionObject: DatabaseServic().cartCollection);
-      final data = (result.docs[0].data() as Map<String, dynamic>)['product_name'];
-
-       emit(state.copyWith(subtotal: ''));
+      final data = (result.docs);
+      int subTotal=0;
+        for(var i=0;i<data.length;i++){
+          final res = data[i].data() as Map<String,dynamic>;
+          // print(int.parse(res['total_price'])* int.parse(res['quantity']));
+         subTotal= subTotal+int.parse(res['total_price'])* int.parse(res['quantity']);
+        }
+       emit(state.copyWith(subtotal: subTotal.toString()));
     });
   }
 }

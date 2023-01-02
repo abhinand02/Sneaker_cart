@@ -17,6 +17,8 @@ class DatabaseServic {
       _auth.firestore.collection(cartcollection);
   late CollectionReference addressCollection =
       _auth.firestore.collection(userAdressCollection);
+  late CollectionReference orderCollection =
+      _auth.firestore.collection(ordercollection);
 
   Future<QuerySnapshot<Object?>> getData() async {
     QuerySnapshot querySnapshot = await productCollection.get();
@@ -24,6 +26,7 @@ class DatabaseServic {
     // print((querySnapshot.docs[0].data() as Map<String, dynamic>)['name']);
     return querySnapshot;
   }
+
   Future<QuerySnapshot<Object?>> getNewArrival(
       {required String field,
       required dynamic condition,
@@ -145,24 +148,55 @@ class DatabaseServic {
       required address,
       required state,
       required pincode,
-      required phnnumber,required BuildContext context}) async {
+      required phnnumber,
+      required BuildContext context}) async {
     try {
-    await  addressCollection.doc().set({
-      'user_id':currentUser!.uid,
-      'name': name,
-      'state': state,
-      'address': address,
-      'number': phnnumber,
-      'pincode': pincode,
-    }).then((value) {
-      const snackbar = SnackBar(content: Text('Address Added Sucessfully'));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      
-    });
+      await addressCollection.doc().set({
+        'user_id': currentUser!.uid,
+        'name': name,
+        'state': state,
+        'address': address,
+        'number': phnnumber,
+        'pincode': pincode,
+      }).then((value) {
+        const snackbar = SnackBar(content: Text('Address Added Sucessfully'));
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      });
     } catch (e) {
       final snackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 
+  // updateAddress({required String field, required condition})async{
+  //  final data =  await addressCollection.where(field,isEqualTo: condition, whereIn: [{
+
+  //  }]).get();
+  //  data.docs[0];
+  // }
+
+  Future addOrderDetails() async {
+    final result = await DatabaseServic().getNewArrival(
+        field: 'user_id',
+        condition: currentUser!.uid,
+        collectionObject: DatabaseServic().cartCollection);
+    for (var i = 0; i < result.docs.length; i++) {
+      final data = result.docs[i].data() as Map<String, dynamic>;
+      final prodctName = data['product_name'];
+      final quantity = data['quantity'];
+      final total = data['total_price'];
+      final image = data['image'];
+      await orderCollection.doc().set({
+        "user_id": currentUser!.uid,
+        "product_name": prodctName,
+        "quantity": quantity,
+        "total": (int.parse(total) * int.parse(quantity) + 40).toString(),
+        "image": image,
+        "date": DateTime.now()
+      });
+    }
+    for (var i = 0; i < result.docs.length; i++) {
+     await cartCollection.doc(result.docs[i].id).delete();
+    }
+  }
 }
