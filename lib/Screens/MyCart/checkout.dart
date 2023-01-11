@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -21,7 +22,7 @@ class CheckoutScreen extends StatelessWidget {
       BlocProvider.of<CartBloc>(context).add(const SubTotal());
     });
     return Scaffold(
-      appBar: myCartAppBar(title: 'Checkout', context: context),
+      appBar: headingAppBar(title: 'Checkout', context: context),
       body: Stack(
         children: [
           BlocBuilder<CheckoutBloc, CheckoutState>(builder: (context, state) {
@@ -80,8 +81,8 @@ class CheckoutScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: greyColor),
-                                child: const Icon(
-                                  Icons.email_outlined,
+                                child:  Icon(
+                                  Iconsax.message,
                                 ),
                               ),
                               title: Column(
@@ -130,7 +131,7 @@ class CheckoutScreen extends StatelessWidget {
                                               .add(EditContactNumber(
                                                   isEditable: !state.isEditable));
                                         },
-                                        icon: const Icon(Icons.edit))
+                                        icon:  Icon(Iconsax.edit,color: blackColor,))
                                     : TextButton(
                                         onPressed: () {
                                           BlocProvider.of<CheckoutBloc>(context)
@@ -149,7 +150,7 @@ class CheckoutScreen extends StatelessWidget {
                                 style: mediumText,
                               ),
                               collapsed: Text(
-                                data['name'] + ', ' + data['address'],
+                                data['name']+ ', '+ data['address'],
                                 style: normalText,
                                 softWrap: true,
                                 maxLines: 1,
@@ -159,7 +160,7 @@ class CheckoutScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data['name'] +', '+data['address'] +', ' +data['number'] +', '+data['pincode'],
+                                    data['name']+', '+data['address']+', '+data['number']+', '+data['pincode'],
                                     style: normalText,
                                     softWrap: true,
                                   ),
@@ -249,7 +250,12 @@ class CheckoutScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomSheet: const PaymentContainer(),
+      bottomSheet: BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (contex, state) {
+          final data = '${state.selectedAddress['name']+state.selectedAddress['address']+' ' +state.selectedAddress['number']+' '+state.selectedAddress['pincode']}';
+          return PaymentContainer(address:data );
+        }
+      ),
     );
   }
 }

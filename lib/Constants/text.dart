@@ -5,6 +5,8 @@ TextStyle bigText= const TextStyle(fontSize: 30,height: 1.9,fontWeight: FontWeig
 
 TextStyle normalText= const TextStyle(fontSize: 18,fontWeight: FontWeight.w600);
 
+TextStyle smallText = const TextStyle(fontSize: 15,wordSpacing: 1);
+
 TextStyle smallGreyText = const  TextStyle(fontSize: 18,height: 1.9,color: Color.fromARGB(255, 112, 123, 123),fontStyle: FontStyle.italic,fontWeight: FontWeight.w700);
 
 TextStyle extraSmallGreyText = const  TextStyle(fontSize: 15,color: Color.fromARGB(255, 112, 123, 123),fontStyle: FontStyle.italic,fontWeight: FontWeight.w600);

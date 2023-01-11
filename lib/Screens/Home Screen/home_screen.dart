@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/product_details.dart';
+import 'package:sneaker_cart/Screens/Home%20Screen/search_screen.dart';
 import '../../Constants/colors.dart';
 import '../../Services/database.dart';
 
@@ -25,88 +27,90 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: appBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SearchBar(),
-            height20,
-            Text(
-              'Popular Shoes',
-              style: mediumText,
-            ),
-            const HomeHorizontalListView(),
-            Row(
-              children: [
-                Text(
-                  'New Arrivals',
-                  style: mediumText,
-                ),
-              ],
-            ),
-            BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                final result = state.newArrival?.docs;
-                if (result == null) {
-                  return const CircularProgressIndicator();
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final data = result[index].data() as Map<String, dynamic>;
-                      return GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<ProductDetailsBloc>(context).add(
-                              ChangeImage(
-                                  index: 0, productname: data['product_name']));
-                          BlocProvider.of<ProductDetailsBloc>(context).add(
-                              GetProductDetail(
-                                  productname: data['product_name']));
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProductDetailsScreen(
-                                category: data['category'],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data['product_name'],
-                                    style: mediumText,
-                                  ),
-                                  height10,
-                                  Text(
-                                    '₹${data['actualPrice']}',
-                                    style: normalText,
-                                  )
-                                ],
-                              ),
-                              Image.network(
-                                data['image'][0],
-                                width: 150,
-                                height: 120,
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: result.length,
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            final result = state.newArrival?.docs;
+            if (result == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Column(mainAxisSize: MainAxisSize.min, children: [
+              const SearchBar(),
+              height20,
+              Text(
+                'Popular Shoes',
+                style: mediumText,
+              ),
+              const HomeHorizontalListView(),
+              Row(
+                children: [
+                  Text(
+                    'New Arrivals',
+                    style: mediumText,
                   ),
-                );
-              },
-            ),
-          ],
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final data = result[index].data() as Map<String, dynamic>;
+                    return GestureDetector(
+                      onTap: () {
+                        DatabaseServic().getOrders();
+                        BlocProvider.of<ProductDetailsBloc>(context).add(IsFav(
+                          prodctName: data['product_name'],
+                        ));
+                        BlocProvider.of<ProductDetailsBloc>(context).add(
+                            ChangeImage(
+                                index: 0, productname: data['product_name']));
+                        BlocProvider.of<ProductDetailsBloc>(context).add(
+                            GetProductDetail(
+                                productname: data['product_name']));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsScreen(
+                              category: data['category'],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['product_name'],
+                                  style: mediumText,
+                                ),
+                                height10,
+                                Text(
+                                  '₹${data['actualPrice']}',
+                                  style: normalText,
+                                )
+                              ],
+                            ),
+                            Image.network(
+                              data['image'][0],
+                              width: 150,
+                              height: 120,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: result.length,
+                ),
+              )
+            ]);
+          },
         ),
       ),
     );
@@ -123,10 +127,8 @@ class HomeHorizontalListView extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       final result = state.productList?.docs;
-      // print(state.productList)
-      // DatabaseServic().getNewArrival();
       if (result == null) {
-        return CircularProgressIndicator();
+        return Center(child: Container());
       }
       if (result.isEmpty) {
         return const Text('Something Went Wrong');
@@ -136,6 +138,7 @@ class HomeHorizontalListView extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10),
         height: width < 400 ? width * .6 : 230,
         child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -145,6 +148,9 @@ class HomeHorizontalListView extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 // DatabaseServic().getCartDetails();
+                BlocProvider.of<ProductDetailsBloc>(context).add(IsFav(
+                  prodctName: data['product_name'],
+                ));
                 BlocProvider.of<ProductDetailsBloc>(context).add(
                     ChangeImage(index: 0, productname: data['product_name']));
                 BlocProvider.of<ProductDetailsBloc>(context)
@@ -152,11 +158,11 @@ class HomeHorizontalListView extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
                           category: data['category'],
-                        )));
+                        ),),);
               },
               child: Container(
                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                padding: const EdgeInsets.only(left: 5, bottom: 5),
+                padding: const EdgeInsets.only(left: 15, bottom: 5),
                 decoration: BoxDecoration(
                   color: cardBg,
                   borderRadius: BorderRadius.circular(25),
@@ -182,7 +188,6 @@ class HomeHorizontalListView extends StatelessWidget {
                       '₹${data['actualPrice']}',
                       style: normalText,
                     ),
-                    
                   ],
                 ),
               ),
@@ -203,11 +208,17 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onTap: () {
+        goToSearch(context);
+      },
+      onChanged: (value){
+        BlocProvider.of<HomeBloc>(context).add(searchResult(searchKey: value),);
+      },
       decoration: InputDecoration(
         fillColor: whiteColor,
         filled: true,
         prefixIcon: Icon(
-          Icons.search,
+          Iconsax.search_normal,
           color: Colors.grey.shade600,
         ),
         border: OutlineInputBorder(
@@ -233,7 +244,7 @@ class MenuWidget extends StatelessWidget {
         onPressed: () {
           ZoomDrawer.of(context)!.toggle();
         },
-        icon: const Icon(Icons.menu));
+        icon:  Icon(Iconsax.menu,color:blackColor,));
   }
 }
 
@@ -255,7 +266,7 @@ AppBar appBar() {
           child: IconButton(
             onPressed: () {},
             icon: const Icon(
-              Icons.shopping_bag_outlined,
+              Iconsax.shopping_bag,
               color: Colors.black,
               size: 35,
             ),
@@ -264,5 +275,13 @@ AppBar appBar() {
       )
     ],
     elevation: 0,
+  );
+}
+
+goToSearch(context) {
+  return Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => const SearchScreen(),
+    ),
   );
 }

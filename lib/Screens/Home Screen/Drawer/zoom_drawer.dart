@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:sneaker_cart/Orders/order_list.dart';
+import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
+import 'package:sneaker_cart/Screens/Orders/order_list.dart';
 import 'package:sneaker_cart/Screens/Favourite/favourite.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/Drawer/Model/menu_item.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/home_screen.dart';
@@ -43,6 +44,8 @@ class _MyHomePageState extends State<HomePage> {
       return AccountAndSettings();
       case MenuItems.orders:
       return const OrderList();
+      case MenuItems.myCart:
+      return  MyCartScreen();
     }
     return const HomeScreen();
   }

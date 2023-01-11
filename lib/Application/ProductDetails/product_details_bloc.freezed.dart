@@ -21,6 +21,8 @@ mixin _$ProductDetailsEvent {
     required TResult Function(String productname) getProductDetail,
     required TResult Function(int index, String productname) changeImage,
     required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +30,8 @@ mixin _$ProductDetailsEvent {
     TResult? Function(String productname)? getProductDetail,
     TResult? Function(int index, String productname)? changeImage,
     TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +39,8 @@ mixin _$ProductDetailsEvent {
     TResult Function(String productname)? getProductDetail,
     TResult Function(int index, String productname)? changeImage,
     TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +49,8 @@ mixin _$ProductDetailsEvent {
     required TResult Function(GetProductDetail value) getProductDetail,
     required TResult Function(ChangeImage value) changeImage,
     required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +58,8 @@ mixin _$ProductDetailsEvent {
     TResult? Function(GetProductDetail value)? getProductDetail,
     TResult? Function(ChangeImage value)? changeImage,
     TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +67,8 @@ mixin _$ProductDetailsEvent {
     TResult Function(GetProductDetail value)? getProductDetail,
     TResult Function(ChangeImage value)? changeImage,
     TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -148,6 +160,8 @@ class _$GetProductDetail implements GetProductDetail {
     required TResult Function(String productname) getProductDetail,
     required TResult Function(int index, String productname) changeImage,
     required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
   }) {
     return getProductDetail(productname);
   }
@@ -158,6 +172,8 @@ class _$GetProductDetail implements GetProductDetail {
     TResult? Function(String productname)? getProductDetail,
     TResult? Function(int index, String productname)? changeImage,
     TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
   }) {
     return getProductDetail?.call(productname);
   }
@@ -168,6 +184,8 @@ class _$GetProductDetail implements GetProductDetail {
     TResult Function(String productname)? getProductDetail,
     TResult Function(int index, String productname)? changeImage,
     TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
     required TResult orElse(),
   }) {
     if (getProductDetail != null) {
@@ -182,6 +200,8 @@ class _$GetProductDetail implements GetProductDetail {
     required TResult Function(GetProductDetail value) getProductDetail,
     required TResult Function(ChangeImage value) changeImage,
     required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
   }) {
     return getProductDetail(this);
   }
@@ -192,6 +212,8 @@ class _$GetProductDetail implements GetProductDetail {
     TResult? Function(GetProductDetail value)? getProductDetail,
     TResult? Function(ChangeImage value)? changeImage,
     TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
   }) {
     return getProductDetail?.call(this);
   }
@@ -202,6 +224,8 @@ class _$GetProductDetail implements GetProductDetail {
     TResult Function(GetProductDetail value)? getProductDetail,
     TResult Function(ChangeImage value)? changeImage,
     TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
     required TResult orElse(),
   }) {
     if (getProductDetail != null) {
@@ -297,6 +321,8 @@ class _$ChangeImage implements ChangeImage {
     required TResult Function(String productname) getProductDetail,
     required TResult Function(int index, String productname) changeImage,
     required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
   }) {
     return changeImage(index, productname);
   }
@@ -307,6 +333,8 @@ class _$ChangeImage implements ChangeImage {
     TResult? Function(String productname)? getProductDetail,
     TResult? Function(int index, String productname)? changeImage,
     TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
   }) {
     return changeImage?.call(index, productname);
   }
@@ -317,6 +345,8 @@ class _$ChangeImage implements ChangeImage {
     TResult Function(String productname)? getProductDetail,
     TResult Function(int index, String productname)? changeImage,
     TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
     required TResult orElse(),
   }) {
     if (changeImage != null) {
@@ -331,6 +361,8 @@ class _$ChangeImage implements ChangeImage {
     required TResult Function(GetProductDetail value) getProductDetail,
     required TResult Function(ChangeImage value) changeImage,
     required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
   }) {
     return changeImage(this);
   }
@@ -341,6 +373,8 @@ class _$ChangeImage implements ChangeImage {
     TResult? Function(GetProductDetail value)? getProductDetail,
     TResult? Function(ChangeImage value)? changeImage,
     TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
   }) {
     return changeImage?.call(this);
   }
@@ -351,6 +385,8 @@ class _$ChangeImage implements ChangeImage {
     TResult Function(GetProductDetail value)? getProductDetail,
     TResult Function(ChangeImage value)? changeImage,
     TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
     required TResult orElse(),
   }) {
     if (changeImage != null) {
@@ -440,6 +476,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     required TResult Function(String productname) getProductDetail,
     required TResult Function(int index, String productname) changeImage,
     required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
   }) {
     return showMoreButton(showMore);
   }
@@ -450,6 +488,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     TResult? Function(String productname)? getProductDetail,
     TResult? Function(int index, String productname)? changeImage,
     TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
   }) {
     return showMoreButton?.call(showMore);
   }
@@ -460,6 +500,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     TResult Function(String productname)? getProductDetail,
     TResult Function(int index, String productname)? changeImage,
     TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
     required TResult orElse(),
   }) {
     if (showMoreButton != null) {
@@ -474,6 +516,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     required TResult Function(GetProductDetail value) getProductDetail,
     required TResult Function(ChangeImage value) changeImage,
     required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
   }) {
     return showMoreButton(this);
   }
@@ -484,6 +528,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     TResult? Function(GetProductDetail value)? getProductDetail,
     TResult? Function(ChangeImage value)? changeImage,
     TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
   }) {
     return showMoreButton?.call(this);
   }
@@ -494,6 +540,8 @@ class _$ShowMoreButton implements ShowMoreButton {
     TResult Function(GetProductDetail value)? getProductDetail,
     TResult Function(ChangeImage value)? changeImage,
     TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
     required TResult orElse(),
   }) {
     if (showMoreButton != null) {
@@ -514,11 +562,283 @@ abstract class ShowMoreButton implements ProductDetailsEvent {
 }
 
 /// @nodoc
+abstract class _$$IsFavCopyWith<$Res> {
+  factory _$$IsFavCopyWith(_$IsFav value, $Res Function(_$IsFav) then) =
+      __$$IsFavCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String prodctName});
+}
+
+/// @nodoc
+class __$$IsFavCopyWithImpl<$Res>
+    extends _$ProductDetailsEventCopyWithImpl<$Res, _$IsFav>
+    implements _$$IsFavCopyWith<$Res> {
+  __$$IsFavCopyWithImpl(_$IsFav _value, $Res Function(_$IsFav) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? prodctName = null,
+  }) {
+    return _then(_$IsFav(
+      prodctName: null == prodctName
+          ? _value.prodctName
+          : prodctName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IsFav implements IsFav {
+  const _$IsFav({required this.prodctName});
+
+  @override
+  final String prodctName;
+
+  @override
+  String toString() {
+    return 'ProductDetailsEvent.isFav(prodctName: $prodctName)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IsFav &&
+            (identical(other.prodctName, prodctName) ||
+                other.prodctName == prodctName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, prodctName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IsFavCopyWith<_$IsFav> get copyWith =>
+      __$$IsFavCopyWithImpl<_$IsFav>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String productname) getProductDetail,
+    required TResult Function(int index, String productname) changeImage,
+    required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
+  }) {
+    return isFav(prodctName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String productname)? getProductDetail,
+    TResult? Function(int index, String productname)? changeImage,
+    TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
+  }) {
+    return isFav?.call(prodctName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String productname)? getProductDetail,
+    TResult Function(int index, String productname)? changeImage,
+    TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
+    required TResult orElse(),
+  }) {
+    if (isFav != null) {
+      return isFav(prodctName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetProductDetail value) getProductDetail,
+    required TResult Function(ChangeImage value) changeImage,
+    required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
+  }) {
+    return isFav(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetProductDetail value)? getProductDetail,
+    TResult? Function(ChangeImage value)? changeImage,
+    TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
+  }) {
+    return isFav?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetProductDetail value)? getProductDetail,
+    TResult Function(ChangeImage value)? changeImage,
+    TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
+    required TResult orElse(),
+  }) {
+    if (isFav != null) {
+      return isFav(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IsFav implements ProductDetailsEvent {
+  const factory IsFav({required final String prodctName}) = _$IsFav;
+
+  String get prodctName;
+  @JsonKey(ignore: true)
+  _$$IsFavCopyWith<_$IsFav> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FavProductCopyWith<$Res> {
+  factory _$$FavProductCopyWith(
+          _$FavProduct value, $Res Function(_$FavProduct) then) =
+      __$$FavProductCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FavProductCopyWithImpl<$Res>
+    extends _$ProductDetailsEventCopyWithImpl<$Res, _$FavProduct>
+    implements _$$FavProductCopyWith<$Res> {
+  __$$FavProductCopyWithImpl(
+      _$FavProduct _value, $Res Function(_$FavProduct) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FavProduct implements FavProduct {
+  const _$FavProduct();
+
+  @override
+  String toString() {
+    return 'ProductDetailsEvent.favProduct()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FavProduct);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String productname) getProductDetail,
+    required TResult Function(int index, String productname) changeImage,
+    required TResult Function(bool showMore) showMoreButton,
+    required TResult Function(String prodctName) isFav,
+    required TResult Function() favProduct,
+  }) {
+    return favProduct();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String productname)? getProductDetail,
+    TResult? Function(int index, String productname)? changeImage,
+    TResult? Function(bool showMore)? showMoreButton,
+    TResult? Function(String prodctName)? isFav,
+    TResult? Function()? favProduct,
+  }) {
+    return favProduct?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String productname)? getProductDetail,
+    TResult Function(int index, String productname)? changeImage,
+    TResult Function(bool showMore)? showMoreButton,
+    TResult Function(String prodctName)? isFav,
+    TResult Function()? favProduct,
+    required TResult orElse(),
+  }) {
+    if (favProduct != null) {
+      return favProduct();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetProductDetail value) getProductDetail,
+    required TResult Function(ChangeImage value) changeImage,
+    required TResult Function(ShowMoreButton value) showMoreButton,
+    required TResult Function(IsFav value) isFav,
+    required TResult Function(FavProduct value) favProduct,
+  }) {
+    return favProduct(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetProductDetail value)? getProductDetail,
+    TResult? Function(ChangeImage value)? changeImage,
+    TResult? Function(ShowMoreButton value)? showMoreButton,
+    TResult? Function(IsFav value)? isFav,
+    TResult? Function(FavProduct value)? favProduct,
+  }) {
+    return favProduct?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetProductDetail value)? getProductDetail,
+    TResult Function(ChangeImage value)? changeImage,
+    TResult Function(ShowMoreButton value)? showMoreButton,
+    TResult Function(IsFav value)? isFav,
+    TResult Function(FavProduct value)? favProduct,
+    required TResult orElse(),
+  }) {
+    if (favProduct != null) {
+      return favProduct(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FavProduct implements ProductDetailsEvent {
+  const factory FavProduct() = _$FavProduct;
+}
+
+/// @nodoc
 mixin _$ProductDetailsState {
   Map<String, dynamic>? get productdetails =>
       throw _privateConstructorUsedError;
   String? get img => throw _privateConstructorUsedError;
   bool? get showMoreButton => throw _privateConstructorUsedError;
+  bool get isFavorited => throw _privateConstructorUsedError;
+  List<QueryDocumentSnapshot<Object?>>? get favProducts =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductDetailsStateCopyWith<ProductDetailsState> get copyWith =>
@@ -534,7 +854,9 @@ abstract class $ProductDetailsStateCopyWith<$Res> {
   $Res call(
       {Map<String, dynamic>? productdetails,
       String? img,
-      bool? showMoreButton});
+      bool? showMoreButton,
+      bool isFavorited,
+      List<QueryDocumentSnapshot<Object?>>? favProducts});
 }
 
 /// @nodoc
@@ -553,6 +875,8 @@ class _$ProductDetailsStateCopyWithImpl<$Res, $Val extends ProductDetailsState>
     Object? productdetails = freezed,
     Object? img = freezed,
     Object? showMoreButton = freezed,
+    Object? isFavorited = null,
+    Object? favProducts = freezed,
   }) {
     return _then(_value.copyWith(
       productdetails: freezed == productdetails
@@ -567,6 +891,14 @@ class _$ProductDetailsStateCopyWithImpl<$Res, $Val extends ProductDetailsState>
           ? _value.showMoreButton
           : showMoreButton // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isFavorited: null == isFavorited
+          ? _value.isFavorited
+          : isFavorited // ignore: cast_nullable_to_non_nullable
+              as bool,
+      favProducts: freezed == favProducts
+          ? _value.favProducts
+          : favProducts // ignore: cast_nullable_to_non_nullable
+              as List<QueryDocumentSnapshot<Object?>>?,
     ) as $Val);
   }
 }
@@ -582,7 +914,9 @@ abstract class _$$_InitialCopyWith<$Res>
   $Res call(
       {Map<String, dynamic>? productdetails,
       String? img,
-      bool? showMoreButton});
+      bool? showMoreButton,
+      bool isFavorited,
+      List<QueryDocumentSnapshot<Object?>>? favProducts});
 }
 
 /// @nodoc
@@ -598,6 +932,8 @@ class __$$_InitialCopyWithImpl<$Res>
     Object? productdetails = freezed,
     Object? img = freezed,
     Object? showMoreButton = freezed,
+    Object? isFavorited = null,
+    Object? favProducts = freezed,
   }) {
     return _then(_$_Initial(
       productdetails: freezed == productdetails
@@ -612,6 +948,14 @@ class __$$_InitialCopyWithImpl<$Res>
           ? _value.showMoreButton
           : showMoreButton // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isFavorited: null == isFavorited
+          ? _value.isFavorited
+          : isFavorited // ignore: cast_nullable_to_non_nullable
+              as bool,
+      favProducts: freezed == favProducts
+          ? _value._favProducts
+          : favProducts // ignore: cast_nullable_to_non_nullable
+              as List<QueryDocumentSnapshot<Object?>>?,
     ));
   }
 }
@@ -622,8 +966,11 @@ class _$_Initial implements _Initial {
   const _$_Initial(
       {required final Map<String, dynamic>? productdetails,
       required this.img,
-      required this.showMoreButton})
-      : _productdetails = productdetails;
+      required this.showMoreButton,
+      required this.isFavorited,
+      required final List<QueryDocumentSnapshot<Object?>>? favProducts})
+      : _productdetails = productdetails,
+        _favProducts = favProducts;
 
   final Map<String, dynamic>? _productdetails;
   @override
@@ -639,10 +986,21 @@ class _$_Initial implements _Initial {
   final String? img;
   @override
   final bool? showMoreButton;
+  @override
+  final bool isFavorited;
+  final List<QueryDocumentSnapshot<Object?>>? _favProducts;
+  @override
+  List<QueryDocumentSnapshot<Object?>>? get favProducts {
+    final value = _favProducts;
+    if (value == null) return null;
+    if (_favProducts is EqualUnmodifiableListView) return _favProducts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ProductDetailsState(productdetails: $productdetails, img: $img, showMoreButton: $showMoreButton)';
+    return 'ProductDetailsState(productdetails: $productdetails, img: $img, showMoreButton: $showMoreButton, isFavorited: $isFavorited, favProducts: $favProducts)';
   }
 
   @override
@@ -654,7 +1012,11 @@ class _$_Initial implements _Initial {
                 .equals(other._productdetails, _productdetails) &&
             (identical(other.img, img) || other.img == img) &&
             (identical(other.showMoreButton, showMoreButton) ||
-                other.showMoreButton == showMoreButton));
+                other.showMoreButton == showMoreButton) &&
+            (identical(other.isFavorited, isFavorited) ||
+                other.isFavorited == isFavorited) &&
+            const DeepCollectionEquality()
+                .equals(other._favProducts, _favProducts));
   }
 
   @override
@@ -662,7 +1024,9 @@ class _$_Initial implements _Initial {
       runtimeType,
       const DeepCollectionEquality().hash(_productdetails),
       img,
-      showMoreButton);
+      showMoreButton,
+      isFavorited,
+      const DeepCollectionEquality().hash(_favProducts));
 
   @JsonKey(ignore: true)
   @override
@@ -673,9 +1037,12 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements ProductDetailsState {
   const factory _Initial(
-      {required final Map<String, dynamic>? productdetails,
-      required final String? img,
-      required final bool? showMoreButton}) = _$_Initial;
+          {required final Map<String, dynamic>? productdetails,
+          required final String? img,
+          required final bool? showMoreButton,
+          required final bool isFavorited,
+          required final List<QueryDocumentSnapshot<Object?>>? favProducts}) =
+      _$_Initial;
 
   @override
   Map<String, dynamic>? get productdetails;
@@ -683,6 +1050,10 @@ abstract class _Initial implements ProductDetailsState {
   String? get img;
   @override
   bool? get showMoreButton;
+  @override
+  bool get isFavorited;
+  @override
+  List<QueryDocumentSnapshot<Object?>>? get favProducts;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>

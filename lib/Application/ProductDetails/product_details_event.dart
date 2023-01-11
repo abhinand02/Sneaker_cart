@@ -14,5 +14,11 @@ class ProductDetailsEvent with _$ProductDetailsEvent {
   const factory ProductDetailsEvent.showMoreButton({
     required bool showMore,
   }) = ShowMoreButton;
+
+  const factory ProductDetailsEvent.isFav({
+    required String prodctName,
+  }) = IsFav;
+  
+  const factory ProductDetailsEvent.favProduct() = FavProduct;
   
 }

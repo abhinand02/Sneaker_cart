@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import '../../../../Constants/text.dart';
 
@@ -14,7 +15,7 @@ class SignOutButtonWidget extends StatelessWidget {
       icon: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Icon(
-          Icons.logout_rounded,
+          Iconsax.logout,
           color: whiteColor,
         ),
       ),

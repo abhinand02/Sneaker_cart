@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/checkout.dart';
 import 'package:sneaker_cart/Screens/MyCart/methods/updatequantity.dart';
@@ -11,8 +12,9 @@ import '../../Widgets/payment_container.dart';
 import 'methods/appbar.dart';
 
 class MyCartScreen extends StatelessWidget {
+  final String? address;
   final BuildContext? context1;
-  MyCartScreen({super.key, this.context1});
+  MyCartScreen({super.key, this.context1,this.address});
   int subtotal = 0;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class MyCartScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color.fromARGB(228, 255, 255, 255),
-      appBar: myCartAppBar(title: 'MyCart', context: context1),
+      appBar: headingAppBar(title: 'MyCart', context: context1),
       body: Padding(
         padding: EdgeInsets.only(bottom: height * .3),
         child: BlocBuilder<CartBloc, CartState>(
@@ -71,6 +73,7 @@ class MyCartScreen extends StatelessWidget {
         }
         return state.cartProduct!.docs.isNotEmpty
             ?  PaymentContainer(
+              address: address ?? '',
                 constructor: CheckoutScreen(),
               )
             : Row(
@@ -189,8 +192,8 @@ class CustomeListTile extends StatelessWidget {
                         backgroundColor: whiteColor,
                         splashFactory: NoSplash.splashFactory,
                       ),
-                      child: const Icon(
-                        Icons.remove,
+                      child:const  Icon(
+                        Iconsax.minus,
                         color: Colors.black,
                         size: 20,
                       ),
@@ -226,7 +229,7 @@ class CustomeListTile extends StatelessWidget {
                       shape: CircleBorder(),
                       backgroundColor: mainColor,
                       splashFactory: NoSplash.splashFactory),
-                  child: const Icon(Icons.add),
+                  child: const Icon(Iconsax.add),
                 ),
               ],
             ),
@@ -242,8 +245,8 @@ class CustomeListTile extends StatelessWidget {
             IconButton(
                 onPressed: () {},
                 icon: const Icon(
-                  Icons.delete_outline_rounded,
-                  size: 28,
+                  Iconsax.trash4,
+                  size: 23,
                 ))
           ],
         ),

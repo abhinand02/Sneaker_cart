@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
 import 'package:sneaker_cart/Services/database.dart';
@@ -9,16 +10,15 @@ import '../../Application/ProductDetails/product_details_bloc.dart';
 import '../../Constants/colors.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  String category;
   ProductDetailsScreen({super.key, required this.category});
-
+  String category;
   bool showMoreDiscription = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(
           context: context,
-          trailingIcon: Icons.shopping_bag_outlined,
+          trailingIcon: Iconsax.shopping_bag,
           title: "$category Shoes"),
       body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         builder: (context, state) {
@@ -31,6 +31,7 @@ class ProductDetailsScreen extends StatelessWidget {
             );
           }
           return ListView(
+            physics: const BouncingScrollPhysics(),
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,9 +47,42 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          result['product_name'],
-                          style: bigText,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              result['product_name'],
+                              style: bigText,
+                            ),
+                            IconButton(
+                              onPressed: () async {
+                                DatabaseServic()
+                                    .addToFav(
+                                        context: context,
+                                        prodctName: result['product_name'],
+                                        img: result['image'][0],
+                                        price: result['actualPrice'],
+                                        category: result['category'])
+                                    .then(
+                                      (value) =>
+                                          BlocProvider.of<ProductDetailsBloc>(
+                                                  context)
+                                              .add(
+                                        IsFav(
+                                          prodctName: result['product_name'],
+                                        ),
+                                      ),
+                                    );
+                              },
+                              icon: Icon(
+                                Iconsax.heart,
+                                color: state.isFavorited
+                                    ? Colors.black
+                                    :Colors.red ,
+                              ),
+                              splashRadius: 25,
+                            )
+                          ],
                         ),
                         height10,
                         Text('₹${result['actualPrice']}', style: mediumText),
@@ -192,11 +226,20 @@ class PriceAndButton extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
-          DatabaseServic().addToCart(productName: productName, image: image, size: '8', totalPrice: price, quantity: '1').then((value) {
-          BlocProvider.of<CartBloc>(context).add(const CartProduct());
-           Navigator.of(context).push(
+          DatabaseServic()
+              .addToCart(
+                  productName: productName,
+                  image: image,
+                  size: '8',
+                  totalPrice: price,
+                  quantity: '1')
+              .then((value) {
+            BlocProvider.of<CartBloc>(context).add(const CartProduct());
+            Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) =>  MyCartScreen(context1: context,),
+                builder: (context) => MyCartScreen(
+                  context1: context,
+                ),
               ),
             );
           });

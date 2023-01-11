@@ -1,6 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sneaker_cart/Constants/colors.dart';
+import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Services/auth.dart';
 
 import '../Constants/firebase_constants.dart';
@@ -19,6 +26,8 @@ class DatabaseServic {
       _auth.firestore.collection(userAdressCollection);
   late CollectionReference orderCollection =
       _auth.firestore.collection(ordercollection);
+  late CollectionReference favCollection =
+      _auth.firestore.collection(favoritecollection);
 
   Future<QuerySnapshot<Object?>> getData() async {
     QuerySnapshot querySnapshot = await productCollection.get();
@@ -175,7 +184,7 @@ class DatabaseServic {
   //  data.docs[0];
   // }
 
-  Future addOrderDetails() async {
+  Future addOrderDetails({required String address}) async {
     final result = await DatabaseServic().getNewArrival(
         field: 'user_id',
         condition: currentUser!.uid,
@@ -192,11 +201,130 @@ class DatabaseServic {
         "quantity": quantity,
         "total": (int.parse(total) * int.parse(quantity) + 40).toString(),
         "image": image,
-        "date": DateTime.now()
+        "date": DateTime.now(),
+        "address": address,
+        "order_status": 'Confirmed',
       });
     }
     for (var i = 0; i < result.docs.length; i++) {
-     await cartCollection.doc(result.docs[i].id).delete();
+      await cartCollection.doc(result.docs[i].id).delete();
     }
+  }
+
+  getOrders() async {
+    final data = await orderCollection
+        .orderBy('date', descending: true,).where('user_id', isEqualTo: currentUser!.uid)
+        .get();
+
+    //  print((data.docs[0].data() as Map<String, dynamic>)['product_name']);
+    return data;
+  }
+
+  Future addToFav(
+      {required String prodctName,
+      required img,
+      required price,
+      required BuildContext context,required String category}) async {
+    final data = favCollection.where('user_id', isEqualTo: currentUser!.uid);
+    final result =
+        await data.where('product_name', isEqualTo: prodctName).get();
+    // print((result.docs.isEmpty));
+    // print((result.docs[0].data() as Map<String, dynamic>) ['product_name']);
+    if (result.docs.isEmpty) {
+      favCollection.doc().set(
+        {
+          "user_id": currentUser!.uid,
+          "product_name": prodctName,
+          "price": price,
+          "image": img,
+          "category": category,
+        },
+      ).then((value) {
+        SnackBar snackBar = SnackBar(
+          content: Text(
+            'Product Added to Favorites',
+            style: smallText,
+          ),
+          backgroundColor: mainColor,
+          shape: const StadiumBorder(),
+          margin: const EdgeInsets.all(10),
+          behavior: SnackBarBehavior.floating,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackBar,
+        );
+      });
+    } else {
+      favCollection.doc(result.docs[0].id).delete().then((value) {
+        SnackBar snackBar = SnackBar(
+          content: Text(
+            'Product Removed from Favorites',
+            style: smallText,
+          ),
+          backgroundColor: mainColor,
+          shape: const StadiumBorder(),
+          margin: const EdgeInsets.all(10),
+          behavior: SnackBarBehavior.floating,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+  }
+
+  Future<bool> getFavData({required String prodctName}) async {
+    final data = favCollection.where('user_id', isEqualTo: currentUser!.uid);
+    final result =
+        await data.where('product_name', isEqualTo: prodctName).get();
+    // print(result.docs.isEmpty);
+    return result.docs.isEmpty;
+  }
+
+
+  Future<File> getImage() async {
+    ImagePicker _picker = ImagePicker();
+
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxHeight: 100, maxWidth: 100);
+    final imagee = File(image!.path);
+     cropImage(image);
+    return imagee;
+  }
+
+  cropImage(filepath) async {
+    CroppedFile? croppedImage = await ImageCropper.platform.cropImage(sourcePath: filepath,aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false)],);
+  }
+ String imageUrl = '';
+  updateProfileImage({required File profileImage}) async{
+    Reference ref = _auth.firebaseStorage.ref().child('Users Profile Image').child(currentUser!.uid).child('userimage');
+    UploadTask uploadTask = ref.putFile(profileImage);
+    await uploadTask.whenComplete(() async{
+    var url = await ref.getDownloadURL();
+    imageUrl= url.toString();
+    }).catchError((error){
+       print(error);
+    });
+    await usersCollection.doc(currentUser!.uid).update({
+       "image": imageUrl,
+    });
+   return imageUrl;
+  }
+
+  searchResult({required String searchKey} ) async{
+  final data= await productCollection.orderBy('product_name').startAt([searchKey]).get();
+final ds = (data.docs[0].data() as Map<String, dynamic>) ['product_name'];
+print(ds);
+return data;
   }
 }

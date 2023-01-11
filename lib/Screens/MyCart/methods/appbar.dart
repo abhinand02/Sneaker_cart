@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Constants/colors.dart';
 
-AppBar myCartAppBar({required String title, BuildContext? context}) {
+AppBar headingAppBar({required String title, BuildContext? context}) {
     return AppBar(
       elevation: 0,
       toolbarHeight: 60,

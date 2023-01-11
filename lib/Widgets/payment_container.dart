@@ -4,7 +4,6 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
 import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
 import 'package:sneaker_cart/Services/database.dart';
-import 'package:sneaker_cart/Widgets/bottom_nav_bar.dart';
 import '../Application/Cart/cart_bloc.dart';
 import '../Constants/colors.dart';
 import '../Constants/text.dart';
@@ -12,9 +11,10 @@ import '../Screens/MyCart/payment_successful.dart';
 
 class PaymentContainer extends StatefulWidget {
   final Widget? constructor;
+  final String address;
   const PaymentContainer({
     Key? key,
-    this.constructor,
+    this.constructor, required this.address,
   }) : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class _PaymentContainerState extends State<PaymentContainer> {
     // Do something when payment succeeds
     print('payment successful');
 
-    return await DatabaseServic().addOrderDetails().then((value) => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PaymentSuccessful())));
+    return await DatabaseServic().addOrderDetails(address: widget.address).then((value) => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PaymentSuccessful())));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

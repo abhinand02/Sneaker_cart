@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/Drawer/Model/menu_item.dart';
@@ -6,12 +7,12 @@ import 'widgets/profile_widget.dart';
 import 'widgets/signout_widget.dart';
 
 class MenuItems {
-  static const home = MenuITEM('Home', Icons.home_outlined);
+  static const home = MenuITEM('Home', Iconsax.home);
   static const accountAndSettings =
-      MenuITEM('Account & Settings', Icons.person_outline_outlined);
-  static const myCart = MenuITEM('MyCart', Icons.shopping_bag_outlined);
-  static const favorite = MenuITEM('Favorite', Icons.favorite_border_rounded);
-  static const orders = MenuITEM('Orders', Icons.fire_truck_outlined);
+      MenuITEM('Account & Settings', Iconsax.profile_tick);
+  static const myCart = MenuITEM('MyCart', Iconsax.shopping_bag);
+  static const favorite = MenuITEM('Favorite', Iconsax.heart);
+  static const orders = MenuITEM('Orders', Iconsax.truck);
 
   static const all = <MenuITEM>[
     home,

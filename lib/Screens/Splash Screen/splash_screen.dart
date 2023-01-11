@@ -6,6 +6,8 @@ import '../OnBoard Screen/onBoarding_screen.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
+  final String id = 'splash';
+
   @override
   Widget build(BuildContext context) {
         goToNext(context);

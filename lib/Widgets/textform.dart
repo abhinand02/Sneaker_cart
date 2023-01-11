@@ -9,6 +9,7 @@ class TextForm extends StatelessWidget {
   String errorMessage1;
   String errorMessage2;
   RegExp regExp;
+  bool readOnly;
 
   TextForm(
       {Key? key,
@@ -18,7 +19,8 @@ class TextForm extends StatelessWidget {
       required this.errorMessage1,
       required this.errorMessage2,
       required this.regExp,
-      required this.formKey})
+      required this.formKey,
+      this.readOnly = false})
       : super(key: key);
 
   @override
@@ -41,20 +43,27 @@ class TextForm extends StatelessWidget {
                 print(value);
               },
               validator: (value) {
-                
                 if (value == null || value.isEmpty) {
                   return 'Enter Your $errorMessage1';
-                } else if(!regExp.hasMatch(value)){
+                } else if (!regExp.hasMatch(value)) {
                   return errorMessage2;
-                }
-                else{
+                } else {
                   return null;
                 }
               },
+              readOnly: readOnly,
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(
+                    color: whiteColor,
+                    width: 0,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
                 hintText: hintText,
                 filled: true,

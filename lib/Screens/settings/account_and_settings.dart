@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/payment_successful.dart';
 import 'package:sneaker_cart/Screens/settings/add_and_edit_address.dart';
@@ -12,9 +13,9 @@ class AccountAndSettings extends StatelessWidget {
   AccountAndSettings({super.key});
 
   final List<IconData> accountSettingsList = [
-    Icons.shopping_cart_outlined,
-    Icons.account_balance_wallet_outlined,
-    Icons.delete_outline_rounded,
+    Iconsax.shopping_bag,
+    Iconsax.card,
+    Iconsax.trash,
   ];
 
   final List<String> title = [
