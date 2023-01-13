@@ -34,5 +34,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.copyWith(searchResult: data),
       );
     });
+
+    on<IsObscureText>((event, emit) {
+      emit(state.copyWith(obscurText: event.newValue),);
+    });
   }
 }

@@ -7,5 +7,10 @@ class HomeEvent with _$HomeEvent {
   const factory HomeEvent.userDetails({required bool newValue}) = UserDetails;
 
   const factory HomeEvent.searchResult({required String searchKey}) = searchResult;
+
+  const factory HomeEvent.isObscureText({
+    required bool newValue
+  }) = IsObscureText;
+  
   
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/checkout.dart';
 import 'package:sneaker_cart/Screens/MyCart/methods/updatequantity.dart';
@@ -32,8 +33,8 @@ class MyCartScreen extends StatelessWidget {
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             if (state.cartProduct == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return  Center(
+                child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
               );
             }
             if (state.cartProduct!.docs.isEmpty) {

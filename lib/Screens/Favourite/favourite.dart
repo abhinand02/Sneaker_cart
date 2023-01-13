@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/Home%20Screen/product_details.dart';
@@ -22,8 +23,8 @@ class FavouriteScreen extends StatelessWidget {
       body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         builder: (context, state) {
           if (state.favProducts == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
             );
           }
 

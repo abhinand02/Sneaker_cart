@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -27,8 +28,8 @@ class CheckoutScreen extends StatelessWidget {
         children: [
           BlocBuilder<CheckoutBloc, CheckoutState>(builder: (context, state) {
             if (state.addressList == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return  Center(
+                child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
               );
             }
             if (state.addressList!.docs.isEmpty) {

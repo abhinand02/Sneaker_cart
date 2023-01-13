@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
 import 'package:sneaker_cart/Services/database.dart';
@@ -24,10 +25,8 @@ class ProductDetailsScreen extends StatelessWidget {
         builder: (context, state) {
           final result = state.productdetails;
           if (result == null) {
-            return const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ),
+            return  Center(
+              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
             );
           }
           return ListView(

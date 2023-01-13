@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Application/Home/home_bloc.dart';
 import '../Constants/colors.dart';
 import '../Constants/text.dart';
 
@@ -10,6 +12,8 @@ class TextForm extends StatelessWidget {
   String errorMessage2;
   RegExp regExp;
   bool readOnly;
+  bool isObscureText;
+  IconButton? icon;
 
   TextForm(
       {Key? key,
@@ -20,11 +24,16 @@ class TextForm extends StatelessWidget {
       required this.errorMessage2,
       required this.regExp,
       required this.formKey,
+      required this.isObscureText,
+      this.icon,
       this.readOnly = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // BlocProvider.of<HomeBloc>(context).add(const IsObscureText(newValue: true));
+    });
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -37,42 +46,49 @@ class TextForm extends StatelessWidget {
           height10,
           Form(
             key: formKey,
-            child: TextFormField(
-              // autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) {
-                print(value);
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Enter Your $errorMessage1';
-                } else if (!regExp.hasMatch(value)) {
-                  return errorMessage2;
-                } else {
-                  return null;
-                }
-              },
-              readOnly: readOnly,
-              controller: controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: whiteColor,
-                    width: 0,
+            child: BlocBuilder<HomeBloc,HomeState>(
+              builder: (context,state) {
+                return TextFormField(
+                  obscuringCharacter: '●',
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  onChanged: (value) {
+                    print(value);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Your $errorMessage1';
+                    } else if (!regExp.hasMatch(value)) {
+                      return errorMessage2;
+                    } else {
+                      return null;
+                    }
+                  },
+                  readOnly: readOnly,
+                  obscureText: isObscureText,
+                  controller: controller,
+                  decoration: InputDecoration(
+                    suffixIcon: icon,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: whiteColor,
+                        width: 0,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
+                    hintText: hintText,
+                    filled: true,
+                    fillColor: whiteColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(color: whiteColor),
+                    ),
                   ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                ),
-                hintText: hintText,
-                filled: true,
-                fillColor: whiteColor,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                  borderSide: BorderSide(color: whiteColor),
-                ),
-              ),
+                );
+              }
             ),
           ),
         ],

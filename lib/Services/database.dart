@@ -1,11 +1,7 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Services/auth.dart';
@@ -40,9 +36,15 @@ class DatabaseServic {
       {required String field,
       required dynamic condition,
       required CollectionReference<Object?> collectionObject}) async {
-    final QuerySnapshot querySnapshot =
-        await collectionObject.where(field, isEqualTo: condition).get();
+        late QuerySnapshot querySnapshot;
+    try {
+        querySnapshot =  await collectionObject.where(field, isEqualTo: condition).get();
+        return querySnapshot;
     // print((querySnapshot.docs[0].data() as Map<String, dynamic>)['name']);
+    }  catch  (e) {
+      print(e);
+      //  Center(child: Text('no internet'),);
+    }
     return querySnapshot;
   }
 
@@ -213,7 +215,11 @@ class DatabaseServic {
 
   getOrders() async {
     final data = await orderCollection
-        .orderBy('date', descending: true,).where('user_id', isEqualTo: currentUser!.uid)
+        .orderBy(
+          'date',
+          descending: true,
+        )
+        .where('user_id', isEqualTo: currentUser!.uid)
         .get();
 
     //  print((data.docs[0].data() as Map<String, dynamic>)['product_name']);
@@ -224,7 +230,8 @@ class DatabaseServic {
       {required String prodctName,
       required img,
       required price,
-      required BuildContext context,required String category}) async {
+      required BuildContext context,
+      required String category}) async {
     final data = favCollection.where('user_id', isEqualTo: currentUser!.uid);
     final result =
         await data.where('product_name', isEqualTo: prodctName).get();
@@ -279,52 +286,53 @@ class DatabaseServic {
     return result.docs.isEmpty;
   }
 
+  // Future<File> getImage() async {
+  //   ImagePicker _picker = ImagePicker();
 
-  Future<File> getImage() async {
-    ImagePicker _picker = ImagePicker();
+  //   XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxHeight: 100, maxWidth: 100);
+  //   final imagee = File(image!.path);
+  //    cropImage(image);
+  //   return imagee;
+  // }
 
-    XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxHeight: 100, maxWidth: 100);
-    final imagee = File(image!.path);
-     cropImage(image);
-    return imagee;
-  }
+  // cropImage(filepath) async {
+  //   CroppedFile? croppedImage = await ImageCropper.platform.cropImage(sourcePath: filepath,aspectRatioPresets: [
+  //       CropAspectRatioPreset.square,
+  //       CropAspectRatioPreset.ratio3x2,
+  //       CropAspectRatioPreset.original,
+  //       CropAspectRatioPreset.ratio4x3,
+  //       CropAspectRatioPreset.ratio16x9
+  //     ],
+  //     uiSettings: [
+  //       AndroidUiSettings(
+  //           toolbarTitle: 'Cropper',
+  //           toolbarColor: Colors.deepOrange,
+  //           toolbarWidgetColor: Colors.white,
+  //           initAspectRatio: CropAspectRatioPreset.original,
+  //           lockAspectRatio: false)],);
+  // }
+//  String imageUrl = '';
+  // updateProfileImage({required File profileImage}) async{
+  //   Reference ref = _auth.firebaseStorage.ref().child('Users Profile Image').child(currentUser!.uid).child('userimage');
+  //   UploadTask uploadTask = ref.putFile(profileImage);
+  //   await uploadTask.whenComplete(() async{
+  //   var url = await ref.getDownloadURL();
+  //   imageUrl= url.toString();
+  //   }).catchError((error){
+  //      print(error);
+  //   });
+  //   await usersCollection.doc(currentUser!.uid).update({
+  //      "image": imageUrl,
+  //   });
+  //  return imageUrl;
+  // }
 
-  cropImage(filepath) async {
-    CroppedFile? croppedImage = await ImageCropper.platform.cropImage(sourcePath: filepath,aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false)],);
-  }
- String imageUrl = '';
-  updateProfileImage({required File profileImage}) async{
-    Reference ref = _auth.firebaseStorage.ref().child('Users Profile Image').child(currentUser!.uid).child('userimage');
-    UploadTask uploadTask = ref.putFile(profileImage);
-    await uploadTask.whenComplete(() async{
-    var url = await ref.getDownloadURL();
-    imageUrl= url.toString();
-    }).catchError((error){
-       print(error);
-    });
-    await usersCollection.doc(currentUser!.uid).update({
-       "image": imageUrl,
-    });
-   return imageUrl;
-  }
-
-  searchResult({required String searchKey} ) async{
-  final data= await productCollection.orderBy('product_name').startAt([searchKey]).get();
-final ds = (data.docs[0].data() as Map<String, dynamic>) ['product_name'];
-print(ds);
-return data;
+  searchResult({required String searchKey}) async {
+    final data = await productCollection
+        .orderBy('product_name')
+        .startAt([searchKey]).get();
+    final ds = (data.docs[0].data() as Map<String, dynamic>)['product_name'];
+    print(ds);
+    return data;
   }
 }

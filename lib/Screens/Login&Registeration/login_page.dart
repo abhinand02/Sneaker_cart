@@ -42,6 +42,7 @@ class LoginPage extends StatelessWidget {
                 hintText: 'Email Address',
                 title: 'Email Address',
                 controller: emailController,
+                isObscureText: false,
               ),
               TextForm(
                 regExp: RegExp(passwordPattern),
@@ -51,6 +52,7 @@ class LoginPage extends StatelessWidget {
                 controller: passwordController,
                 hintText: 'Password',
                 title: 'Password',
+                isObscureText: true,
               ),
             ],
           ),

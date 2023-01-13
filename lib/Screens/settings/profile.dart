@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
-import 'package:sneaker_cart/Services/database.dart';
 import 'package:sneaker_cart/Widgets/textform.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -37,10 +38,11 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, state) {
               return TextButton.icon(
                   onPressed: () {
-                    BlocProvider.of<HomeBloc>(context).add(const UserDetails(newValue: false));
+                    BlocProvider.of<HomeBloc>(context).add( UserDetails(newValue: state.isReadOnly? false: true));
+                    // Bo
                   },
                   icon: const Icon(
-                    Icons.edit,
+                    Iconsax.edit,
                     size: 20,
                   ),
                   label: Text(
@@ -55,8 +57,8 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
           if (state.userDetails == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
             );
           }
           final data = state.userDetails!.data() as Map<String, dynamic>;
@@ -65,47 +67,25 @@ class ProfileScreen extends StatelessWidget {
           passwordController = TextEditingController(text: data['password']);
 
           print(data['email']);
-          return Column(
+          return ListView(
+            physics: const NeverScrollableScrollPhysics(),
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
                 children: [
-                  Center(
+                  const Center(
                     child: SizedBox(
                       height: 115,
                       width: 115,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        fit: StackFit.expand,
-                        children: [
-                           CircleAvatar(
-                            backgroundImage: NetworkImage(data['image'])
-                              ,
+                      child: CircleAvatar(
+                       backgroundImage: AssetImage('assets/images/user-profile.png')
+                         ,
                           ),
-                          Positioned(
-                            bottom: -20,
-                            right: 10,
-                            child: RawMaterialButton(
-                              onPressed: () async{
-                               image= await DatabaseServic().getImage();
-                               image != null ? DatabaseServic().updateProfileImage(profileImage: image!) : '';
-                              },
-                              elevation: 2.0,
-                              fillColor: Color(0xFFF5F6F9),
-                              child: Icon(
-                                Icons.camera_alt_outlined,
-                                color: Colors.blue,
-                              ),
-                              shape: CircleBorder(),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   height20,
                   height10,
-                  const Text('data'),
+                   Text(data['name'],style: mediumText,),
                 ],
               ),
               Column(
@@ -120,6 +100,7 @@ class ProfileScreen extends StatelessWidget {
                     regExp: RegExp(pattern),
                     formKey: nameFormKey,
                     readOnly: state.isReadOnly,
+                    isObscureText: false,
                   ),
                   TextForm(
                     title: 'Email Address',
@@ -130,16 +111,25 @@ class ProfileScreen extends StatelessWidget {
                     regExp: RegExp(pattern),
                     formKey: emailFormKey,
                     readOnly:state.isReadOnly,
+                    isObscureText: false,
                   ),
-                  TextForm(
-                    title: 'Password',
-                    hintText: 'Password',
-                    controller: passwordController,
-                    errorMessage1: 'errorMessage1',
-                    errorMessage2: 'errorMessage2',
-                    regExp: RegExp(pattern),
-                    formKey: passwordFormKey,
-                    readOnly: state.isReadOnly,
+                  BlocBuilder<HomeBloc,HomeState>(
+                    builder: (context, state) {
+                      return TextForm(
+                        title: 'Password',
+                        hintText: 'Password',
+                        controller: passwordController,
+                        errorMessage1: 'errorMessage1',
+                        errorMessage2: 'errorMessage2',
+                        regExp: RegExp(pattern),
+                        formKey: passwordFormKey,
+                        readOnly: state.isReadOnly,
+                        isObscureText: state.obscurText,
+                        icon: IconButton(onPressed: (){
+                      BlocProvider.of<HomeBloc>(context).add(IsObscureText(newValue: state.obscurText ? false: true));
+                    }, icon: Icon(Iconsax.eye)),
+                      );
+                    }
                   ),
                 ],
               )

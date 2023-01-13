@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -31,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, state) {
             final result = state.newArrival?.docs;
             if (result == null) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                child: Lottie.asset('assets/images/loading.json',
+                    width: 100, fit: BoxFit.fill),
+              );
             }
             return Column(mainAxisSize: MainAxisSize.min, children: [
               const SearchBar(),
@@ -96,10 +100,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               ],
                             ),
-                            Image.network(
-                              data['image'][0],
+                            SizedBox(
                               width: 150,
                               height: 120,
+                              child: Image.network(
+                                data['image'][0],
+                                width: 150,
+                                height: 120,
+                                // errorBuilder: ,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Lottie.asset(
+                                        'assets/images/simple-lazy-load.json',
+                                        fit: BoxFit.cover,
+                                        width: 120,
+                                        height: 110,
+                                      ),
+                                    ),
+                                    //     CircularProgressIndicator(
+                                    //   value: loadingProgress.expectedTotalBytes !=
+                                    //           null
+                                    //       ? loadingProgress
+                                    //               .cumulativeBytesLoaded /
+                                    //           loadingProgress.expectedTotalBytes!
+                                    //       : null,
+                                    // ),
+                                  );
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -155,10 +189,13 @@ class HomeHorizontalListView extends StatelessWidget {
                     ChangeImage(index: 0, productname: data['product_name']));
                 BlocProvider.of<ProductDetailsBloc>(context)
                     .add(GetProductDetail(productname: data['product_name']));
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(
+                  MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
-                          category: data['category'],
-                        ),),);
+                      category: data['category'],
+                    ),
+                  ),
+                );
               },
               child: Container(
                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -177,6 +214,21 @@ class HomeHorizontalListView extends StatelessWidget {
                         data['image'][0],
                         fit: BoxFit.contain,
                         height: 150,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child:
+                                //  Lottie.asset('assets/images/simple-lazy-load.json'),
+                                CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                         // width: 170,
                       ),
                     ),
@@ -211,8 +263,10 @@ class SearchBar extends StatelessWidget {
       onTap: () {
         goToSearch(context);
       },
-      onChanged: (value){
-        BlocProvider.of<HomeBloc>(context).add(searchResult(searchKey: value),);
+      onChanged: (value) {
+        BlocProvider.of<HomeBloc>(context).add(
+          searchResult(searchKey: value),
+        );
       },
       decoration: InputDecoration(
         fillColor: whiteColor,
@@ -244,7 +298,10 @@ class MenuWidget extends StatelessWidget {
         onPressed: () {
           ZoomDrawer.of(context)!.toggle();
         },
-        icon:  Icon(Iconsax.menu,color:blackColor,));
+        icon: Icon(
+          Iconsax.menu,
+          color: blackColor,
+        ));
   }
 }
 

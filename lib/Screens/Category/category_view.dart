@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Widgets/appbar.dart';
 import '../../Application/ProductDetails/product_details_bloc.dart';
 import '../../Application/Category/category_bloc.dart';
@@ -18,8 +19,8 @@ class CategoryView extends StatelessWidget {
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state.productList == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
             );
           }
           if (state.productList!.docs.isEmpty) {

@@ -43,6 +43,7 @@ class SignUpScreen extends StatelessWidget {
                 controller: nameController,
                 hintText: 'Your Name',
                 title: 'Enter Your Name',
+                isObscureText: false,
               ),
               TextForm(
                 regExp: RegExp(pattern),
@@ -52,6 +53,7 @@ class SignUpScreen extends StatelessWidget {
                 controller: emailController,
                 hintText: 'Enter Email Address',
                 title: 'Email Address',
+                isObscureText: false,
               ),
               TextForm(
                 regExp: RegExp(passwordPattern),
@@ -61,6 +63,7 @@ class SignUpScreen extends StatelessWidget {
                 controller: passwordController,
                 hintText: 'Enter Password',
                 title: 'Password',
+                isObscureText: true,
               ),
               TextForm(
                 regExp: RegExp(passwordPattern),
@@ -70,6 +73,7 @@ class SignUpScreen extends StatelessWidget {
                 controller: confirmController,
                 hintText: 'Confirm Password',
                 title: 'Confirm Password',
+                isObscureText: true,
               ),
             ],
           ),

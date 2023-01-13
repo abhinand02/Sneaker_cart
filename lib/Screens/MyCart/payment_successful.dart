@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -15,36 +16,34 @@ class PaymentSuccessful extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(
-              image: AssetImage('assets/images/payment-successful.webp')),
-          Text(
-            'Payment Successful',
-            style: mediumText,
-          ),
+           Lottie.asset('assets/images/payment-succesful-animation.json',repeat: false),
           height20,
           Row(
             children: [
               Expanded(
-                  child: ElevatedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false));
-                  BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0),);
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return const BottomNavBar();
-                  }), (route) => false);
+                    BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false));
+                    BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0),);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return const BottomNavBar();
+                    }), (route) => false);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: mainColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  padding: const EdgeInsets.all(20),
+                    backgroundColor: mainColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    padding: const EdgeInsets.all(20),
                 ),
                 child: Text(
-                  'Back To Shopping',
-                  style: normalText,
+                    'Back To Shopping',
+                    style: normalText,
                 ),
-              )),
+              ),
+                  )),
             ],
           )
         ],
