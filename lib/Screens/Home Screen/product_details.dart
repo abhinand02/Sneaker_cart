@@ -12,21 +12,23 @@ import '../../Constants/colors.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key, required this.category});
+  
   String category;
-  bool showMoreDiscription = false;
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(
           context: context,
-          trailingIcon: Iconsax.shopping_bag,
+          trailingIcon: Iconsax.bag_24,
           title: "$category Shoes"),
       body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         builder: (context, state) {
           final result = state.productdetails;
           if (result == null) {
-            return  Center(
-              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
+            return Center(
+              child: Lottie.asset('assets/images/loading.json',
+                  width: 100, fit: BoxFit.fill),
             );
           }
           return ListView(
@@ -77,7 +79,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                 Iconsax.heart,
                                 color: state.isFavorited
                                     ? Colors.black
-                                    :Colors.red ,
+                                    : Colors.red,
                               ),
                               splashRadius: 25,
                             )
@@ -91,7 +93,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           children: [
                             BlocBuilder<ProductDetailsBloc,
                                 ProductDetailsState>(builder: (context, state) {
-                              showMoreDiscription = state.showMoreButton!;
+                              // showMoreDiscription = state.showMoreButton!;
                               return Text(
                                 result['description'],
                                 style: smallGreyText,
@@ -105,15 +107,15 @@ class ProductDetailsScreen extends StatelessWidget {
                               onPressed: () {
                                 BlocProvider.of<ProductDetailsBloc>(context)
                                     .add(ShowMoreButton(
-                                        showMore: !showMoreDiscription));
+                                        showMore: !state.showMoreButton!),);
                               },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateProperty.all(
                                     Colors.transparent),
                               ),
-                              child: Text(showMoreDiscription
-                                  ? 'Show More'
-                                  : 'Show Less'),
+                              child: Text(state.showMoreButton!
+                                  ? 'Show Less'
+                                  : 'Show More'),
                             )
                           ],
                         ),
@@ -270,7 +272,24 @@ class ImageView extends StatelessWidget {
       width: double.infinity,
       height: 250,
       color: const Color.fromARGB(12, 0, 0, 0),
-      child: Image.network(img),
+      child:
+          Image.network(img, loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child:
+              //  Lottie.asset('assets/images/simple-lazy-load.json'),
+              CircularProgressIndicator(
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded /
+                    loadingProgress.expectedTotalBytes!
+                : null,
+          ),
+        );
+      }, errorBuilder: (context, error, stackTrace) {
+        return const Text('failed to load resource');
+      }),
     );
   }
 }
@@ -289,7 +308,9 @@ class GalleryImage extends StatelessWidget {
         color: const Color.fromARGB(12, 0, 0, 0),
         borderRadius: BorderRadius.circular(18),
       ),
-      child: Image.network(img),
+      child: Image.network(img, errorBuilder: (context, error, stackTrace) {
+        return const Text('failed to load resource');
+      }),
     );
   }
 }

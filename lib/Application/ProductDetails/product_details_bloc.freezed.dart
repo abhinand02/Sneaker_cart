@@ -836,7 +836,8 @@ mixin _$ProductDetailsState {
       throw _privateConstructorUsedError;
   String? get img => throw _privateConstructorUsedError;
   bool? get showMoreButton => throw _privateConstructorUsedError;
-  bool get isFavorited => throw _privateConstructorUsedError;
+  bool get isFavorited =>
+      throw _privateConstructorUsedError; // required bool isLoading,
   List<QueryDocumentSnapshot<Object?>>? get favProducts =>
       throw _privateConstructorUsedError;
 
@@ -988,7 +989,9 @@ class _$_Initial implements _Initial {
   final bool? showMoreButton;
   @override
   final bool isFavorited;
+// required bool isLoading,
   final List<QueryDocumentSnapshot<Object?>>? _favProducts;
+// required bool isLoading,
   @override
   List<QueryDocumentSnapshot<Object?>>? get favProducts {
     final value = _favProducts;
@@ -1052,7 +1055,7 @@ abstract class _Initial implements ProductDetailsState {
   bool? get showMoreButton;
   @override
   bool get isFavorited;
-  @override
+  @override // required bool isLoading,
   List<QueryDocumentSnapshot<Object?>>? get favProducts;
   @override
   @JsonKey(ignore: true)

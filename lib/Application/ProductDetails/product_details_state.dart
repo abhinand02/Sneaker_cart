@@ -7,10 +7,11 @@ class ProductDetailsState with _$ProductDetailsState {
     required String? img,
     required bool? showMoreButton,
     required bool isFavorited,
+    // required bool isLoading,
     required List<QueryDocumentSnapshot<Object?>>? favProducts,
   }) = _Initial;
 
   factory ProductDetailsState.initial(){
-    return const ProductDetailsState(productdetails: null, img: null, showMoreButton: false, isFavorited: false , favProducts: null);
+    return const ProductDetailsState(productdetails: null, img: null, showMoreButton: false, isFavorited: false , favProducts: null, );
   }
 }

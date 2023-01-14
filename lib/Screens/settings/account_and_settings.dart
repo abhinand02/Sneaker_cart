@@ -13,7 +13,7 @@ class AccountAndSettings extends StatelessWidget {
   AccountAndSettings({super.key});
 
   final List<IconData> accountSettingsList = [
-    Iconsax.shopping_bag,
+    Iconsax.bag_24,
     Iconsax.card,
     Iconsax.trash,
   ];

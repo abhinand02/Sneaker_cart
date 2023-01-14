@@ -23,7 +23,7 @@ class ProductDetailsBloc
     });
 
     on<ShowMoreButton>((event, emit) {
-      emit(state.copyWith(showMoreButton: event.showMore));
+      emit(state.copyWith(showMoreButton: event.showMore),);
     });
 
     on<IsFav>((event, emit) async {
@@ -37,5 +37,9 @@ class ProductDetailsBloc
       final data = await DatabaseServic().getNewArrival(collectionObject: dataBaseRef.favCollection, condition: dataBaseRef.currentUser!.uid, field: 'user_id');
      emit(state.copyWith(favProducts: data.docs));
     });
+
+    // on<IsLoading>((event, emit){
+
+    // });
   }
 }

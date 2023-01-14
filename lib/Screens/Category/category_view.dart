@@ -19,8 +19,9 @@ class CategoryView extends StatelessWidget {
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state.productList == null) {
-            return  Center(
-              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
+            return Center(
+              child: Lottie.asset('assets/images/loading.json',
+                  width: 100, fit: BoxFit.fill),
             );
           }
           if (state.productList!.docs.isEmpty) {
@@ -67,12 +68,11 @@ class CategoryView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: Image.network(
-                          data['image'][0],
-                          fit: BoxFit.fill,
-                          height: 150,
-                          width: 170,
-                        ),
+                        child: Image.network(data['image'][0],
+                            fit: BoxFit.fill, height: 150, width: 170,
+                            errorBuilder: (context, error, stackTrace) {
+                          return const Text('failed to load resource');
+                        }),
                       ),
                       Text(
                         data['product_name'],

@@ -36,12 +36,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CategoryBloc()),
       ],
       child: MaterialApp(
-        initialRoute: FirebaseAuth.instance.currentUser == null ? const SplashScreen().id : const BottomNavBar().id,
+        initialRoute: FirebaseAuth.instance.currentUser == null
+            ? const SplashScreen().id
+            : const BottomNavBar().id,
         debugShowCheckedModeBanner: false,
         title: 'Sneaker Cart',
         routes: {
-          const SplashScreen().id:(context)=> const SplashScreen(),
-          const BottomNavBar().id : (context)=> const BottomNavBar()
+          const SplashScreen().id: (context) => const SplashScreen(),
+          const BottomNavBar().id: (context) => const BottomNavBar()
         },
         theme: ThemeData(
           // scaffoldBackgroundColor: backGroundColor,

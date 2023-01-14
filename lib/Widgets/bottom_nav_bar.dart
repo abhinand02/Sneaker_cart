@@ -33,7 +33,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         items: const [
           Icon(Iconsax.home,),
           Icon(Iconsax.category,size: 20,),
-          Icon(Iconsax.shopping_bag),
+          Icon(Iconsax.bag_24),
           Icon(Iconsax.heart,),
           Icon(Iconsax.user,),
         ],

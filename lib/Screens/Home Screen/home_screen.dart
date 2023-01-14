@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   '₹${data['actualPrice']}',
                                   style: normalText,
-                                )
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -107,7 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 data['image'][0],
                                 width: 150,
                                 height: 120,
-                                // errorBuilder: ,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Text('failed to load resource');
+                                },
                                 loadingBuilder:
                                     (context, child, loadingProgress) {
                                   if (loadingProgress == null) {
@@ -186,9 +188,13 @@ class HomeHorizontalListView extends StatelessWidget {
                   prodctName: data['product_name'],
                 ));
                 BlocProvider.of<ProductDetailsBloc>(context).add(
-                    ChangeImage(index: 0, productname: data['product_name']));
+                  ChangeImage(index: 0, productname: data['product_name']),
+                );
+                BlocProvider.of<ProductDetailsBloc>(context).add(
+                  GetProductDetail(productname: data['product_name']),
+                );
                 BlocProvider.of<ProductDetailsBloc>(context)
-                    .add(GetProductDetail(productname: data['product_name']));
+                    .add(const ShowMoreButton(showMore: false));
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
@@ -201,7 +207,7 @@ class HomeHorizontalListView extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                 padding: const EdgeInsets.only(left: 15, bottom: 5),
                 decoration: BoxDecoration(
-                  color: cardBg,
+                  color: Color.fromARGB(255, 233, 229, 229),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 width: 170,
@@ -213,6 +219,9 @@ class HomeHorizontalListView extends StatelessWidget {
                       child: Image.network(
                         data['image'][0],
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Text('failed to load resource');
+                        },
                         height: 150,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
@@ -323,7 +332,7 @@ AppBar appBar() {
           child: IconButton(
             onPressed: () {},
             icon: const Icon(
-              Iconsax.shopping_bag,
+              Iconsax.bag_24,
               color: Colors.black,
               size: 35,
             ),

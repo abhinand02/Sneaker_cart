@@ -101,6 +101,13 @@ class DatabaseServic {
     });
   }
 
+  updateUSerData({required String name, required String password}) async{
+     usersCollection.doc(currentUser!.uid).update({
+      'name': name,
+      'password': password,
+     });
+  }
+
   Future addToCart(
       {required String productName,
       required image,
@@ -179,12 +186,14 @@ class DatabaseServic {
     }
   }
 
-  // updateAddress({required String field, required condition})async{
-  //  final data =  await addressCollection.where(field,isEqualTo: condition, whereIn: [{
-
-  //  }]).get();
-  //  data.docs[0];
-  // }
+ Future updateAddress({required String number, required condition})async{
+   final data =  await addressCollection.where('address',isEqualTo: condition,).get();
+   final docId =  data.docs[0].id;
+    addressCollection.doc(docId).update({
+      "number" : number
+    });
+   print(data.docs[0].id);
+  }
 
   Future addOrderDetails({required String address}) async {
     final result = await DatabaseServic().getNewArrival(

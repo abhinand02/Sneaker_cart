@@ -20,5 +20,8 @@ class ProductDetailsEvent with _$ProductDetailsEvent {
   }) = IsFav;
   
   const factory ProductDetailsEvent.favProduct() = FavProduct;
+
+  // const factory ProductDetailsEvent.isLoading({required bool newValue}) = IsLoading;
+  
   
 }

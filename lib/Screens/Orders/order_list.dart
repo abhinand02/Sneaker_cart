@@ -56,24 +56,34 @@ class OrderList extends StatelessWidget {
                     );
                   }
                   return ListView.separated(
+                    physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        final data  = state.orderHistory!.docs[index].data() as Map<String, dynamic>;
+                        final data = state.orderHistory!.docs[index].data()
+                            as Map<String, dynamic>;
                         return ListTile(
-                          onTap: (){
-                            BlocProvider.of<OrdersBloc>(context).add(const GetOrderHistory());
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  OrderDetials(index:index)));
+                          onTap: () {
+                            BlocProvider.of<OrdersBloc>(context)
+                                .add(const GetOrderHistory());
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    OrderDetials(index: index)));
                           },
                           contentPadding: const EdgeInsets.symmetric(
-                            vertical: 20,
+                            vertical: 10,
                             horizontal: 15,
                           ),
-                          leading: Image.network(data['image']),
-                          title:  Text(data['product_name']),
+                          leading: Image.network(data['image'],
+                              errorBuilder: (context, error, stackTrace) {
+                            return const Text('failed to load resource');
+                          }),
+                          title: Text(data['product_name']),
                           // trailing:  Text(data['date']),
                         );
                       },
                       separatorBuilder: (context, index) {
                         return const Divider(
+                          indent: 15,
+                          endIndent: 15,
                           thickness: 1,
                         );
                       },

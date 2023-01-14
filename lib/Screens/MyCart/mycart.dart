@@ -15,7 +15,7 @@ import 'methods/appbar.dart';
 class MyCartScreen extends StatelessWidget {
   final String? address;
   final BuildContext? context1;
-  MyCartScreen({super.key, this.context1,this.address});
+  MyCartScreen({super.key, this.context1, this.address});
   int subtotal = 0;
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,9 @@ class MyCartScreen extends StatelessWidget {
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             if (state.cartProduct == null) {
-              return  Center(
-                child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
+              return Center(
+                child: Lottie.asset('assets/images/loading.json',
+                    width: 100, fit: BoxFit.fill),
               );
             }
             if (state.cartProduct!.docs.isEmpty) {
@@ -73,8 +74,8 @@ class MyCartScreen extends StatelessWidget {
           return const Text('');
         }
         return state.cartProduct!.docs.isNotEmpty
-            ?  PaymentContainer(
-              address: address ?? '',
+            ? PaymentContainer(
+                address: address ?? '',
                 constructor: CheckoutScreen(),
               )
             : Row(
@@ -84,7 +85,11 @@ class MyCartScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const BottomNavBar(),), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const BottomNavBar(),
+                            ),
+                            (route) => false);
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(15),
@@ -153,7 +158,9 @@ class CustomeListTile extends StatelessWidget {
           height: 90,
           decoration: BoxDecoration(
               color: whiteColor, borderRadius: BorderRadius.circular(25)),
-          child: Image.network(img),
+          child: Image.network(img, errorBuilder: (context, error, stackTrace) {
+            return const Text('failed to load resource');
+          }),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +200,7 @@ class CustomeListTile extends StatelessWidget {
                         backgroundColor: whiteColor,
                         splashFactory: NoSplash.splashFactory,
                       ),
-                      child:const  Icon(
+                      child: const Icon(
                         Iconsax.minus,
                         color: Colors.black,
                         size: 20,
@@ -227,7 +234,7 @@ class CustomeListTile extends StatelessWidget {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       backgroundColor: mainColor,
                       splashFactory: NoSplash.splashFactory),
                   child: const Icon(Iconsax.add),
@@ -244,11 +251,18 @@ class CustomeListTile extends StatelessWidget {
               style: normalText,
             ),
             IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Iconsax.trash4,
-                  size: 23,
-                ))
+              onPressed: () {
+                updateQuantityShowDialog(
+                    productName: productName,
+                    size: size,
+                    quantity: quantity,
+                    context: context);
+              },
+              icon: const Icon(
+                Iconsax.trash4,
+                size: 23,
+              ),
+            )
           ],
         ),
       ],

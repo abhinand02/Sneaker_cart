@@ -23,8 +23,9 @@ class FavouriteScreen extends StatelessWidget {
       body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         builder: (context, state) {
           if (state.favProducts == null) {
-            return  Center(
-              child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
+            return Center(
+              child: Lottie.asset('assets/images/loading.json',
+                  width: 100, fit: BoxFit.fill),
             );
           }
 
@@ -118,9 +119,12 @@ class FavouriteScreen extends StatelessWidget {
                               ),
                               Flexible(
                                 child: Center(
-                                  child: Image.network(
-                                    data['image'],
-                                  ),
+                                  child: Image.network(data['image'],
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                    return const Text(
+                                        'failed to load resource');
+                                  }),
                                 ),
                               ),
                               Text(

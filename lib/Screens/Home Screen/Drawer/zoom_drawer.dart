@@ -10,7 +10,7 @@ import 'package:sneaker_cart/Screens/Home%20Screen/Drawer/menu_page.dart';
 import 'package:sneaker_cart/Screens/settings/account_and_settings.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key,});
 
   @override
   State<HomePage> createState() => _MyHomePageState();
@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<HomePage> {
   MenuITEM currentItem = MenuItems.home;
+
   @override
   Widget build(BuildContext ctx) {
     return   ZoomDrawer(

@@ -10,16 +10,16 @@ class MenuItems {
   static const home = MenuITEM('Home', Iconsax.home);
   static const accountAndSettings =
       MenuITEM('Account & Settings', Iconsax.profile_tick);
-  static const myCart = MenuITEM('MyCart', Iconsax.shopping_bag);
+  static const myCart = MenuITEM('MyCart', Iconsax.bag_24);
   static const favorite = MenuITEM('Favorite', Iconsax.heart);
   static const orders = MenuITEM('Orders', Iconsax.truck);
 
   static const all = <MenuITEM>[
     home,
-    accountAndSettings,
     myCart,
     favorite,
-    orders
+    orders,
+    accountAndSettings,
   ];
 }
 
@@ -36,7 +36,7 @@ class MenuPage extends StatelessWidget {
       body: Column(
         children: [
           const Spacer(),
-          const ProfileWidget(),
+          ProfileWidget(),
           // const Spacer(),
           height20,
           height20,

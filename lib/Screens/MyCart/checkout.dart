@@ -7,6 +7,7 @@ import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/methods/appbar.dart';
+import 'package:sneaker_cart/Services/database.dart';
 import 'package:sneaker_cart/Widgets/payment_container.dart';
 import '../../Application/Checkout/checkout_bloc.dart';
 import '../settings/add_and_edit_address.dart';
@@ -82,8 +83,8 @@ class CheckoutScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: greyColor),
-                                child:  Icon(
-                                  Iconsax.message,
+                                child: const Icon(
+                                  Iconsax.sms,
                                 ),
                               ),
                               title: Column(
@@ -119,6 +120,7 @@ class CheckoutScreen extends StatelessWidget {
                                     TextFormField(
                                       readOnly: state.isEditable,
                                       controller: numberController,
+                                      keyboardType: TextInputType.number,
                                       decoration: const InputDecoration(
                                           border: InputBorder.none),
                                     ),
@@ -135,13 +137,14 @@ class CheckoutScreen extends StatelessWidget {
                                         icon:  Icon(Iconsax.edit,color: blackColor,))
                                     : TextButton(
                                         onPressed: () {
-                                          BlocProvider.of<CheckoutBloc>(context)
-                                              .add(
+                                          DatabaseServic().updateAddress(number: numberController.text, condition: data['address']).then((value) => BlocProvider.of<CheckoutBloc>(context).add(Address(index: 0)));
+                                          BlocProvider.of<CheckoutBloc>(context).add(
                                             EditContactNumber(
                                                 isEditable: !state.isEditable),
                                           );
+                                        // BlocProvider.of<CheckoutBloc>(context).add();
                                         },
-                                        child: const Text('Save')),
+                                        child: const Text('Save'),),
                               );
                             }),
                             height10,
@@ -253,8 +256,11 @@ class CheckoutScreen extends StatelessWidget {
       ),
       bottomSheet: BlocBuilder<CheckoutBloc, CheckoutState>(
         builder: (contex, state) {
-          final data = '${state.selectedAddress['name']+state.selectedAddress['address']+' ' +state.selectedAddress['number']+' '+state.selectedAddress['pincode']}';
-          return PaymentContainer(address:data );
+          final address = state.selectedAddress['address'] ?? '';
+          final name =state.selectedAddress['name'] ?? '';
+          final number = state.selectedAddress['number'] ?? '';
+          final pinCode = state.selectedAddress['pincode'] ?? '';
+          return PaymentContainer(address: name+', '+ address+ ', '+ number+ ', '+ pinCode);
         }
       ),
     );
