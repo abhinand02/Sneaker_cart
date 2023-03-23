@@ -20,8 +20,8 @@ class PaymentSuccessful extends StatelessWidget {
           height20,
           ElevatedButton(
             onPressed: () {
-          BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false));
-          BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0),);
+          // BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false),);
+          BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0,),);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) {
             return const BottomNavBar();

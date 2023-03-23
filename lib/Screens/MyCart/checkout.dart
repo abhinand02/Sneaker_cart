@@ -20,7 +20,7 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0));
+      BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0,),);
       BlocProvider.of<CartBloc>(context).add(const SubTotal());
     });
     return Scaffold(
@@ -29,17 +29,14 @@ class CheckoutScreen extends StatelessWidget {
         children: [
           BlocBuilder<CheckoutBloc, CheckoutState>(builder: (context, state) {
             if (state.addressList == null) {
-              return  Center(
-                child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
-              );
-            }
-            if (state.addressList!.docs.isEmpty) {
               return Center(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddAndEditAddress()),
-                    );
+                      MaterialPageRoute(builder: (context) => AddAndEditAddress(ctx: context,),),
+                    ).then((value) {
+                      // BlocProvider.of<CheckoutBloc>(context).add(const Address(index: 0,),);
+                    });                                                  
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(15),
@@ -52,6 +49,12 @@ class CheckoutScreen extends StatelessWidget {
                 ),
               );
             }
+            if (state.addressList == null) {
+              return  Center(
+                child: Lottie.asset('assets/images/loading.json',width: 100,fit: BoxFit.fill),
+              );
+            }
+            
             String isSelectedAddress = (state.selectedAddress['name']+', '+state.selectedAddress['address']);
             final length = state.addressList!.docs.length;
             final data = state.selectedAddress;
@@ -137,7 +140,7 @@ class CheckoutScreen extends StatelessWidget {
                                         icon:  Icon(Iconsax.edit,color: blackColor,))
                                     : TextButton(
                                         onPressed: () {
-                                          DatabaseServic().updateAddress(number: numberController.text, condition: data['address']).then((value) => BlocProvider.of<CheckoutBloc>(context).add(Address(index: 0)));
+                                          DatabaseServic().updateAddress(number: numberController.text, condition: data['address']).then((value) => BlocProvider.of<CheckoutBloc>(context).add(Address(index: 0,)));
                                           BlocProvider.of<CheckoutBloc>(context).add(
                                             EditContactNumber(
                                                 isEditable: !state.isEditable),
@@ -215,7 +218,7 @@ class CheckoutScreen extends StatelessWidget {
                                                                         context)
                                                                     .add(Address(
                                                                         index:
-                                                                            index));
+                                                                            index,));
                                                                 Navigator.of(
                                                                         context)
                                                                     .pop();

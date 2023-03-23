@@ -10,11 +10,12 @@ class HomeState with _$HomeState {
     required QuerySnapshot<Object?>? searchResult,
     required bool isReadOnly,
     required bool obscurText,
+    required bool avatarChanged
   }) = _Initial;
 
   factory HomeState.initial() {
     
-    return const HomeState(productList: null, newArrival: null, userDetails: null,isReadOnly: true, searchResult: null, obscurText: true);
+    return const HomeState(productList: null, newArrival: null, userDetails: null,isReadOnly: true, searchResult: null, obscurText: true, avatarChanged: false);
   }
 }
 

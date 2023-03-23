@@ -49,6 +49,7 @@ class MyCartScreen extends StatelessWidget {
               final data = state.cartProduct!.docs;
               // print('hello ${productList}');
               return ListView.separated(
+                  padding: const EdgeInsets.only(top: 10),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final result = (data[index].data() as Map<String, dynamic>);

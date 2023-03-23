@@ -12,5 +12,8 @@ class HomeEvent with _$HomeEvent {
     required bool newValue
   }) = IsObscureText;
   
+  const factory HomeEvent.isavatarChanged({
+    required bool newAvatar,
+  }) = IsAvatarChanged;
   
 }

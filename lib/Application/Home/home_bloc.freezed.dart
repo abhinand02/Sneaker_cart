@@ -22,6 +22,7 @@ mixin _$HomeEvent {
     required TResult Function(bool newValue) userDetails,
     required TResult Function(String searchKey) searchResult,
     required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$HomeEvent {
     TResult? Function(bool newValue)? userDetails,
     TResult? Function(String searchKey)? searchResult,
     TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$HomeEvent {
     TResult Function(bool newValue)? userDetails,
     TResult Function(String searchKey)? searchResult,
     TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$HomeEvent {
     required TResult Function(UserDetails value) userDetails,
     required TResult Function(searchResult value) searchResult,
     required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$HomeEvent {
     TResult? Function(UserDetails value)? userDetails,
     TResult? Function(searchResult value)? searchResult,
     TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$HomeEvent {
     TResult Function(UserDetails value)? userDetails,
     TResult Function(searchResult value)? searchResult,
     TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,6 +132,7 @@ class _$_Started implements _Started {
     required TResult Function(bool newValue) userDetails,
     required TResult Function(String searchKey) searchResult,
     required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
   }) {
     return started();
   }
@@ -137,6 +144,7 @@ class _$_Started implements _Started {
     TResult? Function(bool newValue)? userDetails,
     TResult? Function(String searchKey)? searchResult,
     TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
   }) {
     return started?.call();
   }
@@ -148,6 +156,7 @@ class _$_Started implements _Started {
     TResult Function(bool newValue)? userDetails,
     TResult Function(String searchKey)? searchResult,
     TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -163,6 +172,7 @@ class _$_Started implements _Started {
     required TResult Function(UserDetails value) userDetails,
     required TResult Function(searchResult value) searchResult,
     required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
   }) {
     return started(this);
   }
@@ -174,6 +184,7 @@ class _$_Started implements _Started {
     TResult? Function(UserDetails value)? userDetails,
     TResult? Function(searchResult value)? searchResult,
     TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
   }) {
     return started?.call(this);
   }
@@ -185,6 +196,7 @@ class _$_Started implements _Started {
     TResult Function(UserDetails value)? userDetails,
     TResult Function(searchResult value)? searchResult,
     TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -267,6 +279,7 @@ class _$UserDetails implements UserDetails {
     required TResult Function(bool newValue) userDetails,
     required TResult Function(String searchKey) searchResult,
     required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
   }) {
     return userDetails(newValue);
   }
@@ -278,6 +291,7 @@ class _$UserDetails implements UserDetails {
     TResult? Function(bool newValue)? userDetails,
     TResult? Function(String searchKey)? searchResult,
     TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
   }) {
     return userDetails?.call(newValue);
   }
@@ -289,6 +303,7 @@ class _$UserDetails implements UserDetails {
     TResult Function(bool newValue)? userDetails,
     TResult Function(String searchKey)? searchResult,
     TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (userDetails != null) {
@@ -304,6 +319,7 @@ class _$UserDetails implements UserDetails {
     required TResult Function(UserDetails value) userDetails,
     required TResult Function(searchResult value) searchResult,
     required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
   }) {
     return userDetails(this);
   }
@@ -315,6 +331,7 @@ class _$UserDetails implements UserDetails {
     TResult? Function(UserDetails value)? userDetails,
     TResult? Function(searchResult value)? searchResult,
     TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
   }) {
     return userDetails?.call(this);
   }
@@ -326,6 +343,7 @@ class _$UserDetails implements UserDetails {
     TResult Function(UserDetails value)? userDetails,
     TResult Function(searchResult value)? searchResult,
     TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (userDetails != null) {
@@ -413,6 +431,7 @@ class _$searchResult implements searchResult {
     required TResult Function(bool newValue) userDetails,
     required TResult Function(String searchKey) searchResult,
     required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
   }) {
     return searchResult(searchKey);
   }
@@ -424,6 +443,7 @@ class _$searchResult implements searchResult {
     TResult? Function(bool newValue)? userDetails,
     TResult? Function(String searchKey)? searchResult,
     TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
   }) {
     return searchResult?.call(searchKey);
   }
@@ -435,6 +455,7 @@ class _$searchResult implements searchResult {
     TResult Function(bool newValue)? userDetails,
     TResult Function(String searchKey)? searchResult,
     TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (searchResult != null) {
@@ -450,6 +471,7 @@ class _$searchResult implements searchResult {
     required TResult Function(UserDetails value) userDetails,
     required TResult Function(searchResult value) searchResult,
     required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
   }) {
     return searchResult(this);
   }
@@ -461,6 +483,7 @@ class _$searchResult implements searchResult {
     TResult? Function(UserDetails value)? userDetails,
     TResult? Function(searchResult value)? searchResult,
     TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
   }) {
     return searchResult?.call(this);
   }
@@ -472,6 +495,7 @@ class _$searchResult implements searchResult {
     TResult Function(UserDetails value)? userDetails,
     TResult Function(searchResult value)? searchResult,
     TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (searchResult != null) {
@@ -560,6 +584,7 @@ class _$IsObscureText implements IsObscureText {
     required TResult Function(bool newValue) userDetails,
     required TResult Function(String searchKey) searchResult,
     required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
   }) {
     return isObscureText(newValue);
   }
@@ -571,6 +596,7 @@ class _$IsObscureText implements IsObscureText {
     TResult? Function(bool newValue)? userDetails,
     TResult? Function(String searchKey)? searchResult,
     TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
   }) {
     return isObscureText?.call(newValue);
   }
@@ -582,6 +608,7 @@ class _$IsObscureText implements IsObscureText {
     TResult Function(bool newValue)? userDetails,
     TResult Function(String searchKey)? searchResult,
     TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (isObscureText != null) {
@@ -597,6 +624,7 @@ class _$IsObscureText implements IsObscureText {
     required TResult Function(UserDetails value) userDetails,
     required TResult Function(searchResult value) searchResult,
     required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
   }) {
     return isObscureText(this);
   }
@@ -608,6 +636,7 @@ class _$IsObscureText implements IsObscureText {
     TResult? Function(UserDetails value)? userDetails,
     TResult? Function(searchResult value)? searchResult,
     TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
   }) {
     return isObscureText?.call(this);
   }
@@ -619,6 +648,7 @@ class _$IsObscureText implements IsObscureText {
     TResult Function(UserDetails value)? userDetails,
     TResult Function(searchResult value)? searchResult,
     TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
     required TResult orElse(),
   }) {
     if (isObscureText != null) {
@@ -638,6 +668,159 @@ abstract class IsObscureText implements HomeEvent {
 }
 
 /// @nodoc
+abstract class _$$IsAvatarChangedCopyWith<$Res> {
+  factory _$$IsAvatarChangedCopyWith(
+          _$IsAvatarChanged value, $Res Function(_$IsAvatarChanged) then) =
+      __$$IsAvatarChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool newAvatar});
+}
+
+/// @nodoc
+class __$$IsAvatarChangedCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$IsAvatarChanged>
+    implements _$$IsAvatarChangedCopyWith<$Res> {
+  __$$IsAvatarChangedCopyWithImpl(
+      _$IsAvatarChanged _value, $Res Function(_$IsAvatarChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newAvatar = null,
+  }) {
+    return _then(_$IsAvatarChanged(
+      newAvatar: null == newAvatar
+          ? _value.newAvatar
+          : newAvatar // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IsAvatarChanged implements IsAvatarChanged {
+  const _$IsAvatarChanged({required this.newAvatar});
+
+  @override
+  final bool newAvatar;
+
+  @override
+  String toString() {
+    return 'HomeEvent.isavatarChanged(newAvatar: $newAvatar)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IsAvatarChanged &&
+            (identical(other.newAvatar, newAvatar) ||
+                other.newAvatar == newAvatar));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, newAvatar);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IsAvatarChangedCopyWith<_$IsAvatarChanged> get copyWith =>
+      __$$IsAvatarChangedCopyWithImpl<_$IsAvatarChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(bool newValue) userDetails,
+    required TResult Function(String searchKey) searchResult,
+    required TResult Function(bool newValue) isObscureText,
+    required TResult Function(bool newAvatar) isavatarChanged,
+  }) {
+    return isavatarChanged(newAvatar);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(bool newValue)? userDetails,
+    TResult? Function(String searchKey)? searchResult,
+    TResult? Function(bool newValue)? isObscureText,
+    TResult? Function(bool newAvatar)? isavatarChanged,
+  }) {
+    return isavatarChanged?.call(newAvatar);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(bool newValue)? userDetails,
+    TResult Function(String searchKey)? searchResult,
+    TResult Function(bool newValue)? isObscureText,
+    TResult Function(bool newAvatar)? isavatarChanged,
+    required TResult orElse(),
+  }) {
+    if (isavatarChanged != null) {
+      return isavatarChanged(newAvatar);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(UserDetails value) userDetails,
+    required TResult Function(searchResult value) searchResult,
+    required TResult Function(IsObscureText value) isObscureText,
+    required TResult Function(IsAvatarChanged value) isavatarChanged,
+  }) {
+    return isavatarChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(UserDetails value)? userDetails,
+    TResult? Function(searchResult value)? searchResult,
+    TResult? Function(IsObscureText value)? isObscureText,
+    TResult? Function(IsAvatarChanged value)? isavatarChanged,
+  }) {
+    return isavatarChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(UserDetails value)? userDetails,
+    TResult Function(searchResult value)? searchResult,
+    TResult Function(IsObscureText value)? isObscureText,
+    TResult Function(IsAvatarChanged value)? isavatarChanged,
+    required TResult orElse(),
+  }) {
+    if (isavatarChanged != null) {
+      return isavatarChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IsAvatarChanged implements HomeEvent {
+  const factory IsAvatarChanged({required final bool newAvatar}) =
+      _$IsAvatarChanged;
+
+  bool get newAvatar;
+  @JsonKey(ignore: true)
+  _$$IsAvatarChangedCopyWith<_$IsAvatarChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$HomeState {
   QuerySnapshot<Object?>? get productList => throw _privateConstructorUsedError;
   QuerySnapshot<Object?>? get newArrival => throw _privateConstructorUsedError;
@@ -647,6 +830,7 @@ mixin _$HomeState {
       throw _privateConstructorUsedError;
   bool get isReadOnly => throw _privateConstructorUsedError;
   bool get obscurText => throw _privateConstructorUsedError;
+  bool get avatarChanged => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -664,7 +848,8 @@ abstract class $HomeStateCopyWith<$Res> {
       DocumentSnapshot<Object?>? userDetails,
       QuerySnapshot<Object?>? searchResult,
       bool isReadOnly,
-      bool obscurText});
+      bool obscurText,
+      bool avatarChanged});
 }
 
 /// @nodoc
@@ -686,6 +871,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? searchResult = freezed,
     Object? isReadOnly = null,
     Object? obscurText = null,
+    Object? avatarChanged = null,
   }) {
     return _then(_value.copyWith(
       productList: freezed == productList
@@ -712,6 +898,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.obscurText
           : obscurText // ignore: cast_nullable_to_non_nullable
               as bool,
+      avatarChanged: null == avatarChanged
+          ? _value.avatarChanged
+          : avatarChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -729,7 +919,8 @@ abstract class _$$_InitialCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
       DocumentSnapshot<Object?>? userDetails,
       QuerySnapshot<Object?>? searchResult,
       bool isReadOnly,
-      bool obscurText});
+      bool obscurText,
+      bool avatarChanged});
 }
 
 /// @nodoc
@@ -748,6 +939,7 @@ class __$$_InitialCopyWithImpl<$Res>
     Object? searchResult = freezed,
     Object? isReadOnly = null,
     Object? obscurText = null,
+    Object? avatarChanged = null,
   }) {
     return _then(_$_Initial(
       productList: freezed == productList
@@ -774,6 +966,10 @@ class __$$_InitialCopyWithImpl<$Res>
           ? _value.obscurText
           : obscurText // ignore: cast_nullable_to_non_nullable
               as bool,
+      avatarChanged: null == avatarChanged
+          ? _value.avatarChanged
+          : avatarChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -787,7 +983,8 @@ class _$_Initial implements _Initial {
       required this.userDetails,
       required this.searchResult,
       required this.isReadOnly,
-      required this.obscurText});
+      required this.obscurText,
+      required this.avatarChanged});
 
   @override
   final QuerySnapshot<Object?>? productList;
@@ -801,10 +998,12 @@ class _$_Initial implements _Initial {
   final bool isReadOnly;
   @override
   final bool obscurText;
+  @override
+  final bool avatarChanged;
 
   @override
   String toString() {
-    return 'HomeState(productList: $productList, newArrival: $newArrival, userDetails: $userDetails, searchResult: $searchResult, isReadOnly: $isReadOnly, obscurText: $obscurText)';
+    return 'HomeState(productList: $productList, newArrival: $newArrival, userDetails: $userDetails, searchResult: $searchResult, isReadOnly: $isReadOnly, obscurText: $obscurText, avatarChanged: $avatarChanged)';
   }
 
   @override
@@ -823,12 +1022,14 @@ class _$_Initial implements _Initial {
             (identical(other.isReadOnly, isReadOnly) ||
                 other.isReadOnly == isReadOnly) &&
             (identical(other.obscurText, obscurText) ||
-                other.obscurText == obscurText));
+                other.obscurText == obscurText) &&
+            (identical(other.avatarChanged, avatarChanged) ||
+                other.avatarChanged == avatarChanged));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, productList, newArrival,
-      userDetails, searchResult, isReadOnly, obscurText);
+      userDetails, searchResult, isReadOnly, obscurText, avatarChanged);
 
   @JsonKey(ignore: true)
   @override
@@ -844,7 +1045,8 @@ abstract class _Initial implements HomeState {
       required final DocumentSnapshot<Object?>? userDetails,
       required final QuerySnapshot<Object?>? searchResult,
       required final bool isReadOnly,
-      required final bool obscurText}) = _$_Initial;
+      required final bool obscurText,
+      required final bool avatarChanged}) = _$_Initial;
 
   @override
   QuerySnapshot<Object?>? get productList;
@@ -858,6 +1060,8 @@ abstract class _Initial implements HomeState {
   bool get isReadOnly;
   @override
   bool get obscurText;
+  @override
+  bool get avatarChanged;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>

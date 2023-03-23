@@ -1,12 +1,13 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Services/auth.dart';
-
+import 'package:twilio_flutter/twilio_flutter.dart';
 import '../Constants/firebase_constants.dart';
+import '../Screens/Login&Registeration/Forgot Password/otp_screen.dart';
 import '../Widgets/bottom_nav_bar.dart';
 
 class DatabaseServic {
@@ -36,12 +37,13 @@ class DatabaseServic {
       {required String field,
       required dynamic condition,
       required CollectionReference<Object?> collectionObject}) async {
-        late QuerySnapshot querySnapshot;
+    late QuerySnapshot querySnapshot;
     try {
-        querySnapshot =  await collectionObject.where(field, isEqualTo: condition).get();
-        return querySnapshot;
-    // print((querySnapshot.docs[0].data() as Map<String, dynamic>)['name']);
-    }  catch  (e) {
+      querySnapshot =
+          await collectionObject.where(field, isEqualTo: condition).get();
+      return querySnapshot;
+      // print((querySnapshot.docs[0].data() as Map<String, dynamic>)['name']);
+    } catch (e) {
       print(e);
       //  Center(child: Text('no internet'),);
     }
@@ -91,6 +93,48 @@ class DatabaseServic {
     return userCredential;
   }
 
+  Future<User?> signInWithGoogle({required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    final GoogleSignInAccount? googleSignInAccount =
+        await _auth.googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+
+        currentUser = userCredential.user;
+        storeUserData(
+            name: googleSignInAccount.displayName,
+            email: googleSignInAccount.email);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const BottomNavBar()),
+            (route) => false);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const BottomNavBar()),
+              (route) => false);
+        } else if (e.code == 'invalid-credential') {
+          // handle the error here
+        }
+      } catch (e) {
+        // handle the error here
+      }
+    }
+
+    return currentUser;
+  }
+
   storeUserData({name, password, email}) async {
     DocumentReference store = usersCollection.doc(currentUser!.uid);
     store.set({
@@ -101,11 +145,15 @@ class DatabaseServic {
     });
   }
 
-  updateUSerData({required String name, required String password}) async{
-     usersCollection.doc(currentUser!.uid).update({
+  updateUSerData(
+      {required String name,
+      required String password,
+      required String email}) async {
+    usersCollection.doc(currentUser!.uid).update({
+      'email': email,
       'name': name,
       'password': password,
-     });
+    });
   }
 
   Future addToCart(
@@ -161,7 +209,7 @@ class DatabaseServic {
     }
   }
 
-  addAddress(
+  Future addAddress(
       {required String name,
       required address,
       required state,
@@ -177,22 +225,31 @@ class DatabaseServic {
         'number': phnnumber,
         'pincode': pincode,
       }).then((value) {
-        const snackbar = SnackBar(content: Text('Address Added Sucessfully'));
+        const snackbar = SnackBar(
+          content: Text('Address Added Sucessfully'),
+        );
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       });
     } catch (e) {
-      final snackbar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      final snackbar = SnackBar(
+        content: Text(
+          e.toString(),
+        ),
+      );
+      // ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 
- Future updateAddress({required String number, required condition})async{
-   final data =  await addressCollection.where('address',isEqualTo: condition,).get();
-   final docId =  data.docs[0].id;
-    addressCollection.doc(docId).update({
-      "number" : number
-    });
-   print(data.docs[0].id);
+  Future updateAddress({required String number, required condition}) async {
+    final data = await addressCollection
+        .where(
+          'address',
+          isEqualTo: condition,
+        )
+        .get();
+    final docId = data.docs[0].id;
+    addressCollection.doc(docId).update({"number": number});
+    print(data.docs[0].id);
   }
 
   Future addOrderDetails({required String address}) async {
@@ -337,11 +394,47 @@ class DatabaseServic {
   // }
 
   searchResult({required String searchKey}) async {
-    final data = await productCollection
-        .orderBy('product_name')
-        .startAt([searchKey]).get();
-    final ds = (data.docs[0].data() as Map<String, dynamic>)['product_name'];
-    print(ds);
+    dynamic data;
+    try {
+      data = await productCollection
+          .orderBy('product_name')
+          .startAt([searchKey]).get();
+    } catch (e) {
+      print('Something went Wrong0');
+    }
+    // final ds = (data.docs[0].data() as Map<String, dynamic>)['product_name'];
+    // print(ds);
     return data;
+  }
+
+  Future deleteAddress({required String docId}) async {
+    addressCollection.doc(docId).delete();
+  }
+
+  Future VerifyPhoneNumber(
+      {required String phoneNumber, required BuildContext context}) async {
+    await _auth.auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: (AuthCredential authCredential) {
+          _auth.auth.signInWithCredential(authCredential).then((result){
+// Navigator.pushReplacement(context, MaterialPageRoute(
+//     builder: (context) => HomeScreen(result.user)
+  // ));
+  print('action complete');
+});
+        },
+        verificationFailed: (FirebaseAuthException authException) {
+          print(authException.message);
+        },
+        codeSent: (String verificationId, int? resendingCode) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => VerifyOTP(verificationId: verificationId,),),);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          verificationId = verificationId;
+          print(verificationId);
+          print('timeout');
+        });
   }
 }

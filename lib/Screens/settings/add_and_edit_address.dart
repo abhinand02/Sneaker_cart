@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
+import 'package:sneaker_cart/Application/address/address_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Services/database.dart';
 
 import '../../Constants/colors.dart';
 
 class AddAndEditAddress extends StatelessWidget {
-  AddAndEditAddress({super.key});
+  final BuildContext ctx;
+  AddAndEditAddress({super.key, required this.ctx});
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -25,9 +29,10 @@ class AddAndEditAddress extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-              'Shipping Address',
-              style: mediumText,
-            ),),
+          'Shipping Address',
+          style: mediumText,
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -79,14 +84,24 @@ class AddAndEditAddress extends StatelessWidget {
                         numberFormKey.currentState!.validate() &&
                         pinFormKey.currentState!.validate() &&
                         addressFormKey.currentState!.validate()) {
-                      DatabaseServic().addAddress(
-                          name: nameController.text,
-                          address: addressController.text,
-                          state: stateController.text,
-                          pincode: pinController.text,
-                          phnnumber: numberController.text,
-                          context: context);
-                      Navigator.of(context).pop();
+                      DatabaseServic()
+                          .addAddress(
+                              name: nameController.text,
+                              address: addressController.text,
+                              state: stateController.text,
+                              pincode: pinController.text,
+                              phnnumber: numberController.text,
+                              context: context)
+                          .then((value) {
+                        BlocProvider.of<CheckoutBloc>(context).add(
+                          const Address(
+                            index: 0,
+                          ),
+                        );
+                        BlocProvider.of<AddressBloc>(context)
+                            .add(const GetAddress());
+                        Navigator.of(context).pop();
+                      });
                     }
                   },
                   child: Text('Add'),
@@ -120,6 +135,7 @@ class CustomTextFields extends StatelessWidget {
       child: Form(
         key: formKey,
         child: TextFormField(
+          textCapitalization: TextCapitalization.words,
           controller: controller,
           keyboardType: keyboardType,
           decoration: InputDecoration(

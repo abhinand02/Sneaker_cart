@@ -6,12 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
+import 'package:sneaker_cart/Application/LazyLoading/lazy_loading_bloc.dart';
 import 'package:sneaker_cart/Application/Orders/orders_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
 import 'package:sneaker_cart/Application/address/address_bloc.dart';
 import 'package:sneaker_cart/Screens/Splash%20Screen/splash_screen.dart';
 import 'package:sneaker_cart/Widgets/bottom_nav_bar.dart';
-
 import 'Application/Category/category_bloc.dart';
 
 void main() async {
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CheckoutBloc()),
         BlocProvider(create: (context) => OrdersBloc()),
         BlocProvider(create: (context) => CategoryBloc()),
+        BlocProvider(create: (context) => LazyLoadingBloc()),
       ],
       child: MaterialApp(
         initialRoute: FirebaseAuth.instance.currentUser == null

@@ -10,9 +10,15 @@ part 'address_bloc.freezed.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc() : super(AddressState.initial()) {
-    on<GetAddress>((event, emit) async{
-      final addressList = await DatabaseServic().getNewArrival(field: 'user_id',condition: DatabaseServic().currentUser!.uid, collectionObject: DatabaseServic().addressCollection);
-      emit(AddressState(addressList: addressList));
+    on<GetAddress>((event, emit) async {
+      final addressList = await DatabaseServic().getNewArrival(
+          field: 'user_id',
+          condition: DatabaseServic().currentUser!.uid,
+          collectionObject: DatabaseServic().addressCollection);
+      emit(state.copyWith(addressList: addressList));
+    });
+    on<IsLoading>((event, emit) {
+      emit(state.copyWith(isLoading: event.loadingValue));
     });
   }
 }

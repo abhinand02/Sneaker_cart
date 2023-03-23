@@ -38,5 +38,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<IsObscureText>((event, emit) {
       emit(state.copyWith(obscurText: event.newValue),);
     });
+
+    on<IsAvatarChanged>((event, emit) {
+   emit(state.copyWith(avatarChanged: event.newAvatar));
+    });
   }
 }

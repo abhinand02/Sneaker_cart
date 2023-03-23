@@ -3,7 +3,8 @@ import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/Login&Registeration/login_page.dart';
 import 'package:sneaker_cart/Services/database.dart';
-import 'package:sneaker_cart/Widgets/appbar.dart' as appBar;
+import 'package:sneaker_cart/Widgets/appbar.dart' as app_bar;
+import 'Widgets/google_signin.dart';
 import 'Widgets/signin_signup.dart';
 import '../../Widgets/textform.dart';
 import 'Widgets/welcomeHeading.dart';
@@ -25,7 +26,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar.appBar(),
+      appBar: app_bar.appBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -143,37 +144,4 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class GoogleSignIn extends StatelessWidget {
-  const GoogleSignIn({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: ElevatedButton.icon(
-              onPressed: () {},
-              label: Text(
-                'Sign in with Google',
-                style: normalBlackText,
-              ),
-              icon: Image.asset(
-                'assets/images/download.png',
-                scale: 4,
-              ),
-              style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: whiteColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

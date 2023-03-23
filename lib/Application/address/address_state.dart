@@ -4,9 +4,10 @@ part of 'address_bloc.dart';
 class AddressState with _$AddressState {
   const factory AddressState({
         required QuerySnapshot<Object?>? addressList,
+        required bool isLoading,
   }) = _Initial;
 
   factory AddressState.initial(){
-    return const AddressState(addressList: null);
+    return const AddressState(addressList: null, isLoading: false);
   }
 }

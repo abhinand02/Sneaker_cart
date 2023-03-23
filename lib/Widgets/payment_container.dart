@@ -14,7 +14,8 @@ class PaymentContainer extends StatefulWidget {
   final String address;
   const PaymentContainer({
     Key? key,
-    this.constructor, required this.address,
+    this.constructor,
+    required this.address,
   }) : super(key: key);
 
   @override
@@ -32,15 +33,23 @@ class _PaymentContainerState extends State<PaymentContainer> {
     super.initState();
   }
 
-   Future<Future<Object?>> _handlePaymentSuccess(PaymentSuccessResponse response) async{
+  Future<Future<Object?>> _handlePaymentSuccess(
+      PaymentSuccessResponse response) async {
     // Do something when payment succeeds
+                            // BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false),);
     print('payment successful');
 
-    return await DatabaseServic().addOrderDetails(address: widget.address).then((value) => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const PaymentSuccessful())));
+    return await DatabaseServic().addOrderDetails(address: widget.address).then(
+        (value) => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const PaymentSuccessful())));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
+    BlocProvider.of<CheckoutBloc>(context).add(
+      const Loading(isLoading: false),
+    );
+
     print('payment failed');
   }
 
@@ -81,18 +90,21 @@ class _PaymentContainerState extends State<PaymentContainer> {
                   Expanded(
                     child: BlocBuilder<CheckoutBloc, CheckoutState>(
                         builder: (context, state) {
-                          final address = state.selectedAddress;
-                          print(address['number']);
+                      final address = state.selectedAddress;
+                      print(address['number']);
                       return ElevatedButton(
                         onPressed: () {
                           var options;
-                          if (state.addressList == null || state.addressList!.docs.isEmpty) {
+                          if (state.addressList == null ||
+                              state.addressList!.docs.isEmpty) {
                             if (widget.constructor != null) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => widget.constructor!));
                             }
                           } else {
-                            BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: true));
+                            BlocProvider.of<CheckoutBloc>(context).add(
+                               Loading(isLoading: widget.constructor != null ? false : true),
+                            );
                             options = {
                               'key': 'rzp_test_ars40jMvKPCzqT',
                               'amount': total *

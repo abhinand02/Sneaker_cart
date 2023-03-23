@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:sneaker_cart/Application/LazyLoading/lazy_loading_bloc.dart';
 import 'package:sneaker_cart/Screens/Category/category.dart';
 import 'package:sneaker_cart/Screens/settings/profile.dart';
 import '../Screens/Favourite/favourite.dart';
@@ -26,6 +28,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<LazyLoadingBloc>(context).add(const started(loadingValue: false));
+    });
     return Scaffold(
       body: _pages[currentIndex],
       bottomNavigationBar: CurvedNavigationBar(

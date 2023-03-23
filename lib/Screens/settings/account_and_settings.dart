@@ -6,6 +6,7 @@ import 'package:sneaker_cart/Constants/text.dart';
 import 'package:sneaker_cart/Screens/MyCart/payment_successful.dart';
 import 'package:sneaker_cart/Screens/settings/add_and_edit_address.dart';
 import 'package:sneaker_cart/Screens/settings/address_list.dart';
+import 'package:sneaker_cart/Screens/settings/widgets/delete_account.dart';
 import '../../Constants/colors.dart';
 import '../Home Screen/home_screen.dart';
 
@@ -25,8 +26,9 @@ class AccountAndSettings extends StatelessWidget {
   ];
   final List<Widget> pages = [
     AddressListPage(),
-    AddAndEditAddress(),
+    // AddAndEditAddress(ctx: ,),
     PaymentSuccessful(),
+    DeleteAccount(),
   ];
 
   @override

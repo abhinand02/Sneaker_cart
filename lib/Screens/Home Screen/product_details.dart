@@ -12,9 +12,9 @@ import '../../Constants/colors.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key, required this.category});
-  
+
   String category;
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,8 +106,10 @@ class ProductDetailsScreen extends StatelessWidget {
                             TextButton(
                               onPressed: () {
                                 BlocProvider.of<ProductDetailsBloc>(context)
-                                    .add(ShowMoreButton(
-                                        showMore: !state.showMoreButton!),);
+                                    .add(
+                                  ShowMoreButton(
+                                      showMore: !state.showMoreButton!),
+                                );
                               },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateProperty.all(
@@ -169,14 +171,22 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                         height10,
                         Row(
-                          children: const [
-                            CircleAvatar(
-                              child: Text('7'),
+                          children: List.generate(
+                            4,
+                            (index) => ElevatedButton(
+                              onPressed: () {},
+                              child: Text(
+                                '7',
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                // padding: EdgeInsets.only(right: 2),
+                              ),
                             ),
-                          ],
+                          ),
                         ),
                         height10,
-                        PriceAndButton(
+                        PriceAndButton(   
                           price: result['actualPrice'],
                           productName: result['product_name'],
                           size: '7',
@@ -208,8 +218,8 @@ class PriceAndButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      const Spacer(),
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      // const Spacer(),
       Column(
         children: [
           Text(
@@ -222,9 +232,9 @@ class PriceAndButton extends StatelessWidget {
           ),
         ],
       ),
-      const Spacer(
-        flex: 5,
-      ),
+      // const Spacer(
+      //   flex: 5,
+      // ),
       ElevatedButton(
         onPressed: () {
           DatabaseServic()
@@ -257,7 +267,7 @@ class PriceAndButton extends StatelessWidget {
           style: mediumText,
         ),
       ),
-      const Spacer(),
+      // const Spacer(),
     ]);
   }
 }

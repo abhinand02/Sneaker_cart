@@ -5,7 +5,7 @@ Color mainColor = const Color.fromARGB(255, 91, 158, 255);
 
 Color whiteColor = Colors.white;
 
-Color cardBg = const Color.fromARGB(255, 165, 220, 242);
+Color cardBg = Color.fromARGB(255, 215, 237, 247);
 
 
 Color greyColor  = const Color.fromARGB(62, 221, 214, 214);

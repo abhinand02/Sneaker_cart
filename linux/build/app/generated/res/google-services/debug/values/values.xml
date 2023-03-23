@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">746985630960-tglrh8mai9t5vntffh01g2f8sst6rgk5.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">746985630960</string>
+    <string name="google_api_key" translatable="false">AIzaSyBRMa87QYv96xamMiQ0E8b_SaTZ6ueXj3E</string>
+    <string name="google_app_id" translatable="false">1:746985630960:android:2b5c2cb0a9d68611a8a635</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBRMa87QYv96xamMiQ0E8b_SaTZ6ueXj3E</string>
+    <string name="google_storage_bucket" translatable="false">sneaker-cart.appspot.com</string>
+    <string name="project_id" translatable="false">sneaker-cart</string>
+</resources>

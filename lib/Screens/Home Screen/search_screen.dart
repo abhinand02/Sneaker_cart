@@ -113,8 +113,9 @@ class SearchScreen extends StatelessWidget {
                                       data['product_name'],
                                       style: mediumText,
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                      maxLines: 1,
                                     ),
+                                    height10,
                                     Text(
                                       '₹${data['actualPrice']}',
                                       style: normalText,

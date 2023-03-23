@@ -77,6 +77,7 @@ class CategoryView extends StatelessWidget {
                       Text(
                         data['product_name'],
                         style: mediumText,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         '₹${data['actualPrice']}',

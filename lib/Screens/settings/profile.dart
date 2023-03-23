@@ -5,8 +5,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
+import 'package:sneaker_cart/Services/auth.dart';
 import 'package:sneaker_cart/Widgets/textform.dart';
-
 import '../../Services/database.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -38,14 +38,23 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
             return TextButton.icon(
-              onPressed: () {
+              onPressed: () async {
                 BlocProvider.of<HomeBloc>(context).add(
                     UserDetails(newValue: state.isReadOnly ? false : true));
-                // Bo
                 if (state.isReadOnly == true) {
                 } else {
-                  DatabaseServic().updateUSerData(name: nameController.text, password: passwordController.text);
-
+                  AuthService()
+                      .auth
+                      .currentUser!
+                      .updateEmail(emailController.text);
+                  AuthService()
+                      .auth
+                      .currentUser!
+                      .updatePassword(passwordController.text);
+                  DatabaseServic().updateUSerData(
+                      email: emailController.text,
+                      name: nameController.text,
+                      password: passwordController.text);
                 }
               },
               icon: const Icon(
@@ -76,18 +85,95 @@ class ProfileScreen extends StatelessWidget {
 
           // print(data['email']);
           return ListView(
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
                 children: [
-                  const Center(
+                  Center(
                     child: SizedBox(
-                      height: 115,
-                      width: 115,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/user-profile.png'),
+                      // height: 115,
+                      // width: 115,
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 55,
+                            backgroundImage: AssetImage(state.avatarChanged
+                                ? 'assets/images/profile_image1.jpg'
+                                : 'assets/images/profile_image2.jpeg'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      BlocBuilder<HomeBloc, HomeState>(
+                                          builder: (context, state) {
+                                        return AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20.0))),
+                                          actionsAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          contentPadding:
+                                              const EdgeInsets.all(10),
+                                          content: Text(
+                                            'Choose Avatar',
+                                            style: mediumText,
+                                          ),
+                                          actions: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                BlocProvider.of<HomeBloc>(
+                                                        context)
+                                                    .add(const IsAvatarChanged(
+                                                        newAvatar: true));
+                                                Navigator.pop(context);
+                                              },
+                                              child: CircleAvatar(
+                                                radius: state.avatarChanged
+                                                    ? 53
+                                                    : 50,
+                                                backgroundColor:
+                                                    Colors.greenAccent,
+                                                child: const CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/images/profile_image1.jpg'),
+                                                  radius: 50,
+                                                ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                BlocProvider.of<HomeBloc>(
+                                                        context)
+                                                    .add(const IsAvatarChanged(
+                                                        newAvatar: false));
+                                                Navigator.pop(context);
+                                              },
+                                              child: CircleAvatar(
+                                                radius: state.avatarChanged
+                                                    ? 50
+                                                    : 53,
+                                                backgroundColor:
+                                                    Colors.greenAccent,
+                                                child: const CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/images/profile_image2.jpeg'),
+                                                  radius: 50,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      }));
+                            },
+                            child: Text(
+                              'Change Avatar',
+                              style: smallText,
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -121,30 +207,34 @@ class ProfileScreen extends StatelessWidget {
                     errorMessage2: 'errorMessage2',
                     regExp: RegExp(pattern),
                     formKey: emailFormKey,
-                    readOnly: true,
+                    readOnly: state.isReadOnly,
                     isObscureText: false,
                   ),
-                  BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-                    return TextForm(
-                      title: 'Password',
-                      hintText: 'Password',
-                      controller: passwordController,
-                      errorMessage1: 'errorMessage1',
-                      errorMessage2: 'errorMessage2',
-                      regExp: RegExp(pattern),
-                      formKey: passwordFormKey,
-                      readOnly: state.isReadOnly,
-                      isObscureText: state.obscurText,
-                      icon: IconButton(
-                        splashRadius: 20,
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return TextForm(
+                        title: 'Password',
+                        hintText: 'Password',
+                        controller: passwordController,
+                        errorMessage1: 'errorMessage1',
+                        errorMessage2: 'errorMessage2',
+                        regExp: RegExp(pattern),
+                        formKey: passwordFormKey,
+                        readOnly: state.isReadOnly,
+                        isObscureText: true,
+                        icon: IconButton(
+                          splashRadius: 20,
                           onPressed: () {
-                            BlocProvider.of<HomeBloc>(context).add(
-                                IsObscureText(
-                                    newValue: state.obscurText ? false : true));
+                            // BlocProvider.of<HomeBloc>(context).add(IsObscureText(
+                            //     newValue: state.obscurText ? false : true));
                           },
-                          icon:  Icon(state.obscurText ? Iconsax.eye4 : Iconsax.eye_slash5),),
-                    );
-                  }),
+                          icon: Icon(state.obscurText
+                              ? Iconsax.eye4
+                              : Iconsax.eye_slash5),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               )
             ],

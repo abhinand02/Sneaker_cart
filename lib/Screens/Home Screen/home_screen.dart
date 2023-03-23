@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -207,7 +208,7 @@ class HomeHorizontalListView extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                 padding: const EdgeInsets.only(left: 15, bottom: 5),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 233, 229, 229),
+                  color: Color.fromARGB(255, 226, 234, 246),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 width: 170,
@@ -243,6 +244,9 @@ class HomeHorizontalListView extends StatelessWidget {
                     ),
                     Text(
                       data['product_name'],
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
                       style: mediumText,
                     ),
                     Text(
@@ -323,23 +327,6 @@ AppBar appBar() {
       child:
           CircleAvatar(backgroundColor: whiteColor, child: const MenuWidget()),
     ),
-    actions: [
-      Transform.scale(
-        scale: .7,
-        child: CircleAvatar(
-          backgroundColor: whiteColor,
-          radius: 28,
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Iconsax.bag_24,
-              color: Colors.black,
-              size: 35,
-            ),
-          ),
-        ),
-      )
-    ],
     elevation: 0,
   );
 }

@@ -11,6 +11,6 @@ class CheckoutState with _$CheckoutState {
   }) = _Initial;
 
   factory CheckoutState.initial(){
-    return const CheckoutState(addressList: null, userEmail: null, isEditable: true, selectedAddress: {}, isLoading: false);
+    return const CheckoutState(addressList: null, userEmail: null, isEditable: true, selectedAddress: {}, isLoading: false,);
   }
 }

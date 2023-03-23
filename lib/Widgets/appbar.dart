@@ -35,7 +35,8 @@ AppBar appBar({ String? title,IconData? trailingIcon, BuildContext? context}) {
                 radius: 28,
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: 
+                  Icon(
                     trailingIcon,
                     color: Colors.black,
                     size: 35,
