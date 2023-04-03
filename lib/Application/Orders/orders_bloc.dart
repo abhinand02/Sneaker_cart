@@ -10,8 +10,8 @@ part 'orders_bloc.freezed.dart';
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   OrdersBloc() : super(OrdersState.initial()) {
     on<GetOrderHistory>((event, emit) async{
-      final data = await DatabaseServic().getOrders();
-      print('$data or null');
+      List<QueryDocumentSnapshot<Object?>> data = await DatabaseServic().getOrders();
+      // print(data[0]['user_id']);
       emit(OrdersState(orderHistory: data));
     });
   }

@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:746985630960:android:5af9e1bcc5eba9d2a8a635",
         "android_client_info": {
-          "package_name": "com.example.sneaker_cart"
+          "package_name": "in.abhinand.sneaker_cart"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "746985630960-61330ptqtobhkqieipj8gtjmb0tka2o7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.sneaker_cart",
+            "package_name": "in.abhinand.sneaker_cart",
             "certificate_hash": "7c9bebd280f28016661d99a681feb92bdf73e1e8"
           }
         },
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:746985630960:android:2b5c2cb0a9d68611a8a635",
         "android_client_info": {
-          "package_name": "com.example.sneaker_cart_admin"
+          "package_name": "in.abhinand.sneaker_cart"
         }
       },
       "oauth_client": [
@@ -54,7 +54,7 @@
           "client_id": "746985630960-mk9imd715nteghs844enpib19jpmjijq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.sneaker_cart_admin",
+            "package_name": "in.abhinand.sneaker_cart",
             "certificate_hash": "69089cf2537de1722428fda6a57345c59a64eda3"
           }
         },

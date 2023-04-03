@@ -1,13 +1,19 @@
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
-import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
+import 'package:sneaker_cart/Screens/Orders/order_details.dart';
+import 'package:sneaker_cart/Services/auth.dart';
 import 'package:sneaker_cart/Services/database.dart';
 import '../Application/Cart/cart_bloc.dart';
 import '../Constants/colors.dart';
 import '../Constants/text.dart';
 import '../Screens/MyCart/payment_successful.dart';
+import 'package:http/http.dart' as http;
+import '../Screens/MyCart/widgets/pricetext_widget.dart';
 
 class PaymentContainer extends StatefulWidget {
   final Widget? constructor;
@@ -24,21 +30,143 @@ class PaymentContainer extends StatefulWidget {
 
 class _PaymentContainerState extends State<PaymentContainer> {
   final Razorpay _razorpay = Razorpay();
+  String mtoken = '';
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
+    super.initState();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    super.initState();
+    requestPermission();
+    getToken();
+  }
+
+  initInfo() {
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOSnitialize = const IOSInitializationSettings();
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize, iOS: iOSnitialize);
+    flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: (payload) async {
+        try {
+          if (payload != null && payload.isNotEmpty) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const OrderDetials(index: 0,);
+                },
+              ),
+            );
+          }
+        } catch (e) {}
+        return;
+      },
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      // print('onmessage');
+      // print(
+          // 'onmessage: ${message.notification?.title}/${message.notification?.body}');
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+          message.notification!.body.toString(),
+          htmlFormatBigText: true,
+          contentTitle: message.notification!.title.toString(),
+          htmlFormatContentTitle: true);
+
+      AndroidNotificationDetails androidPlatformChennelSpecifics =
+          AndroidNotificationDetails('sneakercart', 'sneakercart', '',
+              importance: Importance.high,
+              styleInformation: bigTextStyleInformation,
+              priority: Priority.high,
+              playSound: true);
+
+      NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChennelSpecifics,
+      );
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, platformChannelSpecifics,
+          payload: message.data['body']);
+    });
+  }
+
+  void getToken() async {
+    AuthService service = AuthService();
+    await service.messaging.getToken().then((token) {
+      setState(() {
+        mtoken = token!;
+        // print('my token is $mtoken');
+      });
+    });
+  }
+
+  void requestPermission() async {
+    AuthService service = AuthService();
+
+    NotificationSettings settings = await service.messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true);
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // print('user granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      // print('user granted provosional permission');
+    } else {
+      // print('user declined or has not accepted permission');
+    }
+  }
+
+  void sendPushMessage(String body, String title) async {
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAArevQLPA:APA91bEiet_uj3QCIDH10NKSNh_qNmAGqtIp_kVPbypzWqEqGblDO4AGjL8z7kxzdVN-Drl4nswiqqjqsNiDFW7RBHqgBqJw8ttNPz85knoUVL6qZyC2D-gWoCZw7FAEmO4p0l724Tjd'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': body,
+              'title': title,
+            },
+            'notification': <String, dynamic>{
+              "title": title,
+              'body': body,
+              'image':
+                  'https://firebasestorage.googleapis.com/v0/b/sneaker-cart.appspot.com/o/Adidas%2FForum%2084%20%2F2022-12-21%2012%3A08%3A56.541613?alt=media&token=ed36ab01-a260-4ae9-a5f3-1e87f0366de7',
+              'android_channel_id': 'sneakercart'
+            },
+            'to': mtoken,
+          },
+        ),
+      );
+    } catch (e) {
+      // print(e);
+    }
   }
 
   Future<Future<Object?>> _handlePaymentSuccess(
       PaymentSuccessResponse response) async {
     // Do something when payment succeeds
-                            // BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false),);
-    print('payment successful');
-
+    // BlocProvider.of<CheckoutBloc>(context).add(const Loading(isLoading: false),);
+    // print('payment successful');
+    initInfo();
+    sendPushMessage('Your Order Completed', 'Order Completed');
     return await DatabaseServic().addOrderDetails(address: widget.address).then(
         (value) => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const PaymentSuccessful())));
@@ -50,7 +178,7 @@ class _PaymentContainerState extends State<PaymentContainer> {
       const Loading(isLoading: false),
     );
 
-    print('payment failed');
+    // print('payment failed');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -91,7 +219,7 @@ class _PaymentContainerState extends State<PaymentContainer> {
                     child: BlocBuilder<CheckoutBloc, CheckoutState>(
                         builder: (context, state) {
                       final address = state.selectedAddress;
-                      print(address['number']);
+                      // print(address['number']);
                       return ElevatedButton(
                         onPressed: () {
                           var options;
@@ -103,7 +231,10 @@ class _PaymentContainerState extends State<PaymentContainer> {
                             }
                           } else {
                             BlocProvider.of<CheckoutBloc>(context).add(
-                               Loading(isLoading: widget.constructor != null ? false : true),
+                              Loading(
+                                  isLoading: widget.constructor != null
+                                      ? false
+                                      : true),
                             );
                             options = {
                               'key': 'rzp_test_ars40jMvKPCzqT',

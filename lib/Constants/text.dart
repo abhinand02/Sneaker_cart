@@ -3,6 +3,8 @@ import 'package:sneaker_cart/Constants/colors.dart';
 
 TextStyle bigText= const TextStyle(fontSize: 30,height: 1.9,fontWeight: FontWeight.w600);
 
+TextStyle ProductTitle= const TextStyle(fontSize: 25,height: 1.2,fontWeight: FontWeight.w600);
+
 TextStyle normalText= const TextStyle(fontSize: 18,fontWeight: FontWeight.w600);
 
 TextStyle smallText = const TextStyle(fontSize: 15,wordSpacing: 1);
@@ -17,11 +19,19 @@ SizedBox height10 = const SizedBox(height: 10,);
 
 SizedBox height20  = const SizedBox(height: 20,);
 
+SizedBox height50  = const SizedBox(height: 50,);
+
 TextStyle mediumTextWhite =  TextStyle(fontSize: 23,fontWeight: FontWeight.w600,color: whiteColor);
 
 TextStyle mediumGreyText =  const TextStyle(fontSize: 23,fontWeight: FontWeight.w600,color: Color.fromARGB(255, 112, 123, 123));
 
 TextStyle normalBlackText = const TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.w500);
+
+TextStyle normalBoldText =  TextStyle(fontSize: 20, color: blackColor, fontWeight: FontWeight.w900,);
+TextStyle subBoldText =  TextStyle(fontSize: 15, color: blackColor, fontWeight: FontWeight.w900,);
+TextStyle statusText  =  TextStyle(fontSize: 14, color: mainColor, fontWeight: FontWeight.w900,);
+
+
 
 String pattern =
                     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"

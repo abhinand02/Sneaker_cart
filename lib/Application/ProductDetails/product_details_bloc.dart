@@ -38,8 +38,8 @@ class ProductDetailsBloc
      emit(state.copyWith(favProducts: data.docs));
     });
 
-    // on<IsLoading>((event, emit){
-
-    // });
+    on<IsSizeSelected>((event, emit){
+      emit(state.copyWith(index: event.newIndex));
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sneaker_cart/Constants/text.dart';
+import 'package:sneaker_cart/Screens/Login&Registeration/login_page.dart';
 import 'package:sneaker_cart/Services/auth.dart';
 import 'package:sneaker_cart/Services/database.dart';
 import 'package:sneaker_cart/Widgets/appbar.dart';
@@ -47,7 +48,9 @@ class DeleteAccount extends StatelessWidget {
                             ),
                             actions: [
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.grey),
                                 child: Text(
@@ -56,10 +59,19 @@ class DeleteAccount extends StatelessWidget {
                                 ),
                               ),
                               ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (DatabaseServic().currentUser != null) {
-                                    // AuthService().auth.signOut();
-                                    AuthService().auth.currentUser!.delete();
+                                    await AuthService()
+                                        .auth.currentUser!.delete()
+                                        .then((value) {
+                                      // AuthService().auth.currentUser!.delete();
+
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                          (route) => false);
+                                    });
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(

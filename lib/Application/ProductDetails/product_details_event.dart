@@ -21,7 +21,7 @@ class ProductDetailsEvent with _$ProductDetailsEvent {
   
   const factory ProductDetailsEvent.favProduct() = FavProduct;
 
-  // const factory ProductDetailsEvent.isLoading({required bool newValue}) = IsLoading;
+  const factory ProductDetailsEvent.isSizeSelected({required int? newIndex}) = IsSizeSelected;
   
   
 }

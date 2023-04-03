@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sneaker_cart/Services/auth.dart';
+import 'package:sneaker_cart/Services/database.dart';
 import 'Widgets/otp_textfield.dart';
 
 class VerifyOTP extends StatelessWidget {
@@ -30,13 +32,17 @@ class VerifyOTP extends StatelessWidget {
               OtpInput(controller6, false),
             ],
           ),
-          ElevatedButton(onPressed: (){
-            print(controller1.text + controller2.text + controller3.text + controller4.text + controller5.text + controller6.text);
-            try {
-           final _credential =  PhoneAuthProvider.credential(verificationId: verificationId, smsCode: controller1.text + controller2.text + controller3.text + controller4.text + controller4.text + controller6.text);
-            } catch (e) {
-              print(e);
-            }
+          ElevatedButton(onPressed: () async{
+            // final smsCode = controller1.text + controller2.text + controller3.text + controller4.text + controller5.text + controller6.text;
+            // try {
+          //  final _credential =  PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+          //  AuthService service = AuthService();
+        //  await service.auth.signInWithCredential(_credential).then((value) {
+            // print('created');
+          // });
+            // } catch (e) {
+              // print(e);
+            // }
           }, child: Text('Verify'),),
 
         ],

@@ -51,7 +51,8 @@ class ForgotPassword extends StatelessWidget {
             ),),
 
             ElevatedButton(onPressed: (){
-DatabaseServic().VerifyPhoneNumber(phoneNumber: phoneNumberController.text, context: context);
+          //  DatabaseServic().verification();
+// DatabaseServic().VerifyPhoneNumber(phoneNumber: phoneNumberController.text, context: context);
             }, child: const Text('Send Code'),),
 
             //  Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,

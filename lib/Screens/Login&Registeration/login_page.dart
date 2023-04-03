@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appbar.appBar(),
-      body: Stack(
+      body: Stack( 
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,8 @@ class LoginPage extends StatelessWidget {
                 mainText: 'Hello Again!',
                 subText: '''Welcome Back You've Been Missed!''',
               ),
-              Column(crossAxisAlignment: CrossAxisAlignment.end,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextForm(
                     regExp: RegExp(pattern),
@@ -56,9 +57,15 @@ class LoginPage extends StatelessWidget {
                     title: 'Password',
                     isObscureText: true,
                   ),
-                  TextButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  ForgotPassword()));
-                  },style: const ButtonStyle(splashFactory: NoSplash.splashFactory), child: const Text('Forgot Password'),)
+                  TextButton(
+                    onPressed: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => ForgotPassword()));
+                    },
+                    style: const ButtonStyle(
+                        splashFactory: NoSplash.splashFactory),
+                    child: const Text('Forgot Password'),
+                  )
                 ],
               ),
               Column(
@@ -80,8 +87,10 @@ class LoginPage extends StatelessWidget {
           Center(
             child: BlocBuilder<LazyLoadingBloc, LazyLoadingState>(
               builder: (context, state) {
-                return state.isLoading? Lottie.asset('assets/images/loading.json',
-                    width: 100, fit: BoxFit.fill) :const Text('');
+                return state.isLoading
+                    ? Lottie.asset('assets/images/loading.json',
+                        width: 100, fit: BoxFit.fill)
+                    : const Text('');
               },
             ),
           )
@@ -114,20 +123,17 @@ class LoginButton extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                BlocProvider.of<LazyLoadingBloc>(context).add(const started(loadingValue: true));
                 FocusManager.instance.primaryFocus?.unfocus();
                 DatabaseServic().getData();
                 if (emailFormKey.currentState!.validate() &&
-                    passwordFormKey.currentState!.validate()) {
+                    passwordFormKey.currentState!.validate()) { 
+                  BlocProvider.of<LazyLoadingBloc>(context)
+                      .add(const started(loadingValue: true));
                   DatabaseServic().loginMethod(
                       email: emailController.text,
                       password: passwordController.text,
                       context: context);
                 }
-                // .then((value) {
-
-                // },);
-                // }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: mainColor,

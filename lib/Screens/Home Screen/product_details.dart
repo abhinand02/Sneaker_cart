@@ -3,20 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sneaker_cart/Constants/text.dart';
-import 'package:sneaker_cart/Screens/MyCart/mycart.dart';
 import 'package:sneaker_cart/Services/database.dart';
 import 'package:sneaker_cart/Widgets/appbar.dart';
-import '../../Application/Cart/cart_bloc.dart';
 import '../../Application/ProductDetails/product_details_bloc.dart';
-import '../../Constants/colors.dart';
+import 'Widgets/image_gallery_widget.dart';
+import 'Widgets/image_view_widget.dart';
+import 'Widgets/price_button_widget.dart';
+import 'Widgets/sizechart_widget.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key, required this.category});
 
   String category;
+  int sizeChartlength = 0;
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: appBar(
           context: context,
@@ -51,9 +54,14 @@ class ProductDetailsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              result['product_name'],
-                              style: bigText,
+                            Container(
+                              width: width - 100,
+                              child: Text(
+                                result['product_name'],
+                                style: ProductTitle,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             IconButton(
                               onPressed: () async {
@@ -94,8 +102,9 @@ class ProductDetailsScreen extends StatelessWidget {
                             BlocBuilder<ProductDetailsBloc,
                                 ProductDetailsState>(builder: (context, state) {
                               // showMoreDiscription = state.showMoreButton!;
+                              // print(sizeChart);
                               return Text(
-                                result['description'],
+                                result['description'], 
                                 style: smallGreyText,
                                 maxLines: state.showMoreButton! ? 7 : 2,
                                 overflow: state.showMoreButton!
@@ -129,15 +138,15 @@ class ProductDetailsScreen extends StatelessWidget {
                         Row(
                           children: [
                             GestureDetector(
-                                onTap: () =>
-                                    BlocProvider.of<ProductDetailsBloc>(context)
-                                        .add(ChangeImage(
-                                            index: 0,
-                                            productname:
-                                                result['product_name'])),
-                                child: GalleryImage(
-                                  img: result['image'][0],
-                                )),
+                              onTap: () =>
+                                  BlocProvider.of<ProductDetailsBloc>(context)
+                                      .add(ChangeImage(
+                                          index: 0,
+                                          productname: result['product_name'])),
+                              child: GalleryImage(
+                                img: result['image'][0],
+                              ),
+                            ),
                             GestureDetector(
                                 onTap: () =>
                                     BlocProvider.of<ProductDetailsBloc>(context)
@@ -149,10 +158,11 @@ class ProductDetailsScreen extends StatelessWidget {
                             GestureDetector(
                                 onTap: () =>
                                     BlocProvider.of<ProductDetailsBloc>(context)
-                                        .add(ChangeImage(
-                                            index: 2,
-                                            productname:
-                                                result['product_name'])),
+                                        .add(
+                                      ChangeImage(
+                                          index: 2,
+                                          productname: result['product_name']),
+                                    ),
                                 child: GalleryImage(img: result['image'][2])),
                           ],
                         ),
@@ -160,7 +170,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Size',
+                              'Size Chart',
                               style: mediumText,
                             ),
                             Text(
@@ -170,26 +180,26 @@ class ProductDetailsScreen extends StatelessWidget {
                           ],
                         ),
                         height10,
-                        Row(
+                        Wrap(
                           children: List.generate(
-                            4,
-                            (index) => ElevatedButton(
-                              onPressed: () {},
-                              child: Text(
-                                '7',
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                // padding: EdgeInsets.only(right: 2),
-                              ),
-                            ),
+                            6,
+                            (index) => BlocBuilder<ProductDetailsBloc,
+                                ProductDetailsState>(builder: (context, state) {
+                              if (state.index == null) {
+                                return SizeChartWidget(
+                                    selectedIndex: -1, index: index);
+                              }
+                              return SizeChartWidget(
+                                selectedIndex: state.index!,
+                                index: index,
+                              );
+                            }),
                           ),
                         ),
                         height10,
-                        PriceAndButton(   
+                        PriceAndButton(
                           price: result['actualPrice'],
                           productName: result['product_name'],
-                          size: '7',
                           image: result['image'][0],
                         ),
                       ],
@@ -201,126 +211,6 @@ class ProductDetailsScreen extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class PriceAndButton extends StatelessWidget {
-  final String price;
-  final String productName, image, size;
-  const PriceAndButton({
-    Key? key,
-    required this.price,
-    required this.productName,
-    required this.image,
-    required this.size,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      // const Spacer(),
-      Column(
-        children: [
-          Text(
-            'Price',
-            style: smallGreyText,
-          ),
-          Text(
-            '₹$price',
-            style: mediumText,
-          ),
-        ],
-      ),
-      // const Spacer(
-      //   flex: 5,
-      // ),
-      ElevatedButton(
-        onPressed: () {
-          DatabaseServic()
-              .addToCart(
-                  productName: productName,
-                  image: image,
-                  size: '8',
-                  totalPrice: price,
-                  quantity: '1')
-              .then((value) {
-            BlocProvider.of<CartBloc>(context).add(const CartProduct());
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MyCartScreen(
-                  context1: context,
-                ),
-              ),
-            );
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(15),
-          backgroundColor: mainColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-        child: Text(
-          'Add To Cart',
-          style: mediumText,
-        ),
-      ),
-      // const Spacer(),
-    ]);
-  }
-}
-
-class ImageView extends StatelessWidget {
-  final String img;
-  const ImageView({Key? key, required this.img}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 250,
-      color: const Color.fromARGB(12, 0, 0, 0),
-      child:
-          Image.network(img, loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return Center(
-          child:
-              //  Lottie.asset('assets/images/simple-lazy-load.json'),
-              CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes!
-                : null,
-          ),
-        );
-      }, errorBuilder: (context, error, stackTrace) {
-        return const Text('failed to load resource');
-      }),
-    );
-  }
-}
-
-class GalleryImage extends StatelessWidget {
-  final String img;
-  const GalleryImage({Key? key, required this.img}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-      height: 60,
-      width: 60,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(12, 0, 0, 0),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Image.network(img, errorBuilder: (context, error, stackTrace) {
-        return const Text('failed to load resource');
-      }),
     );
   }
 }

@@ -32,7 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           await DatabaseServic().searchResult(searchKey: event.searchKey);
       emit(
         state.copyWith(searchResult: data),
-      );
+      );        
     });
 
     on<IsObscureText>((event, emit) {

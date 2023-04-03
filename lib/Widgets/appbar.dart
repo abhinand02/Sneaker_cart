@@ -10,7 +10,7 @@ AppBar appBar({ String? title,IconData? trailingIcon, BuildContext? context}) {
       style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
     ),
     centerTitle: true,
-    leading: Transform.scale(
+    leading: context !=null ? Transform.scale(
       scale: .7,
       child: CircleAvatar(
         backgroundColor: whiteColor,
@@ -25,7 +25,7 @@ AppBar appBar({ String? title,IconData? trailingIcon, BuildContext? context}) {
           },
         ),
       ),
-    ),
+    ) : Container(),
     actions: [
       trailingIcon != null
           ? Transform.scale(

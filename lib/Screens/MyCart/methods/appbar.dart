@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sneaker_cart/Screens/Home%20Screen/home_screen.dart';
 import '../../../Constants/colors.dart';
 
-AppBar headingAppBar({required String title, BuildContext? context}) {
+AppBar headingAppBar({required String title, BuildContext? context,}) {
     return AppBar(
       elevation: 0,
       toolbarHeight: 60,
@@ -26,7 +27,7 @@ AppBar headingAppBar({required String title, BuildContext? context}) {
               Navigator.of(context).pop();
             },
           ),
-        ): Container(),
+        ):  Container(),
       ),
     );
   }

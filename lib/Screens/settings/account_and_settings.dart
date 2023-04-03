@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sneaker_cart/Constants/text.dart';
-import 'package:sneaker_cart/Screens/MyCart/payment_successful.dart';
-import 'package:sneaker_cart/Screens/settings/add_and_edit_address.dart';
+import 'package:sneaker_cart/Screens/settings/about.dart';
 import 'package:sneaker_cart/Screens/settings/address_list.dart';
+import 'package:sneaker_cart/Screens/settings/privacy_policy.dart';
+import 'package:sneaker_cart/Screens/settings/terms_and_condition.dart';
 import 'package:sneaker_cart/Screens/settings/widgets/delete_account.dart';
 import '../../Constants/colors.dart';
 import '../Home Screen/home_screen.dart';
@@ -15,19 +14,27 @@ class AccountAndSettings extends StatelessWidget {
 
   final List<IconData> accountSettingsList = [
     Iconsax.bag_24,
-    Iconsax.card,
     Iconsax.trash,
   ];
 
-  final List<String> title = [
-    'Shipping Address',
-    'Payment Info',
-    'Delete Account'
+  final List<IconData> appSettingsIcons = [
+    Iconsax.security_safe,
+    Iconsax.document_text_1,
+    Iconsax.warning_2,
   ];
-  final List<Widget> pages = [
+
+  final List<Widget> appSettingsPages = const [
+    PrivacyPolicy(),
+    TermsAndCondition(),
+    About()
+  ];
+
+  final List<String> title = ['Shipping Address', 'Delete Account'];
+
+
+  final List<String> appSettingsTitle = ['Privacy Policy', 'Terms and Conditions', 'About'];
+  final List<Widget> pages = const [
     AddressListPage(),
-    // AddAndEditAddress(ctx: ,),
-    PaymentSuccessful(),
     DeleteAccount(),
   ];
 
@@ -46,7 +53,7 @@ class AccountAndSettings extends StatelessWidget {
             ),
             const Divider(),
             Container(
-              height: 220,
+              height: 160,
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return AccountSettingsListTile(
@@ -59,22 +66,26 @@ class AccountAndSettings extends StatelessWidget {
                 separatorBuilder: (context, index) {
                   return const Divider();
                 },
-                itemCount: 3,
+                itemCount: 2,
               ),
             ),
             const Divider(
               thickness: 1,
             ),
-            Text(
-              'App Settings',
-              style: mediumText,
-            ),
-            ListTile(
-              leading: Text(
-                'Dark Mode',
-                style: smallGreyText,
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return AccountSettingsListTile(
+                      title: appSettingsTitle[index],
+                      icon: (Iconsax.arrow_right_3),
+                      leading: appSettingsIcons[index],
+                      page: appSettingsPages[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemCount: 3,
               ),
-              trailing: Switch(value: false, onChanged: (value) {}),
             )
           ],
         ),
@@ -106,7 +117,7 @@ class AccountSettingsListTile extends StatelessWidget {
         style: smallGreyText,
       ),
       leading: Icon(leading),
-      trailing: IconButton(onPressed: () {}, icon: Icon(icon)),
+      trailing: Icon(icon),
     );
   }
 }

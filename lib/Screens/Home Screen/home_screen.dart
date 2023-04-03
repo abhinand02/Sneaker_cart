@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
 import 'package:sneaker_cart/Application/ProductDetails/product_details_bloc.dart';
 import 'package:sneaker_cart/Constants/text.dart';
@@ -22,133 +21,147 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<HomeBloc>(context).add(const HomeEvent.started());
     });
     return Scaffold(
       appBar: appBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            final result = state.newArrival?.docs;
-            if (result == null) {
-              return Center(
-                child: Lottie.asset('assets/images/loading.json',
-                    width: 100, fit: BoxFit.fill),
-              );
-            }
-            return Column(mainAxisSize: MainAxisSize.min, children: [
-              const SearchBar(),
-              height20,
-              Text(
-                'Popular Shoes',
-                style: mediumText,
-              ),
-              const HomeHorizontalListView(),
-              Row(
-                children: [
-                  Text(
-                    'New Arrivals',
-                    style: mediumText,
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final data = result[index].data() as Map<String, dynamic>;
-                    return GestureDetector(
-                      onTap: () {
-                        DatabaseServic().getOrders();
-                        BlocProvider.of<ProductDetailsBloc>(context).add(IsFav(
-                          prodctName: data['product_name'],
-                        ));
-                        BlocProvider.of<ProductDetailsBloc>(context).add(
-                            ChangeImage(
-                                index: 0, productname: data['product_name']));
-                        BlocProvider.of<ProductDetailsBloc>(context).add(
-                            GetProductDetail(
-                                productname: data['product_name']));
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(
-                              category: data['category'],
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+          final result = state.newArrival?.docs;
+          if (result == null) {
+            return Center(
+              child: Lottie.asset('assets/images/loading.json',
+                  width: 100, fit: BoxFit.fill),
+            );
+          }
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SearchBar(),
+                height20,
+                Text(
+                  'Popular Shoes',
+                  style: mediumText,
+                ),
+                const HomeHorizontalListView(),
+                Row(
+                  children: [
+                    Text(
+                      'New Arrivals',
+                      style: mediumText,
+                    ),
+                  ],
+                ),
+                Flexible(
+                  child: ListView.builder(    
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final data = result[index].data() as Map<String, dynamic>;
+                      return GestureDetector(
+                        onTap: () {
+                          DatabaseServic().getOrders();
+                          BlocProvider.of<ProductDetailsBloc>(context)
+                              .add(IsFav(
+                            prodctName: data['product_name'],
+                          ));
+                          BlocProvider.of<ProductDetailsBloc>(context).add(
+                              ChangeImage(
+                                  index: 0, productname: data['product_name']));
+                          BlocProvider.of<ProductDetailsBloc>(context).add(
+                              GetProductDetail(
+                                  productname: data['product_name']));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsScreen(
+                                category: data['category'],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                            color: whiteColor,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['product_name'],
-                                  style: mediumText,
-                                ),
-                                height10,
-                                Text(
-                                  '₹${data['actualPrice']}',
-                                  style: normalText,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 150,
-                              height: 120,
-                              child: Image.network(
-                                data['image'][0],
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: width / 2,
+                                    child: Text(
+                                      data['product_name'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: normalText,
+                                    ),
+                                  ),
+                                  height10,
+                                  Text(
+                                    '₹${data['actualPrice']}',
+                                    style: normalText,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
                                 width: 150,
                                 height: 120,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Text('failed to load resource');
-                                },
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  }
-                                  return Center(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Lottie.asset(
-                                        'assets/images/simple-lazy-load.json',
-                                        fit: BoxFit.cover,
-                                        width: 120,
-                                        height: 110,
+                                child: Image.network(
+                                  data['image'][0],
+                                  width: 150,
+                                  height: 120,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Text(
+                                        'failed to load resource');
+                                  },
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    }
+                                    return Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Lottie.asset(
+                                          'assets/images/simple-lazy-load.json',
+                                          fit: BoxFit.cover,
+                                          width: 120,
+                                          height: 110,
+                                        ),
                                       ),
-                                    ),
-                                    //     CircularProgressIndicator(
-                                    //   value: loadingProgress.expectedTotalBytes !=
-                                    //           null
-                                    //       ? loadingProgress
-                                    //               .cumulativeBytesLoaded /
-                                    //           loadingProgress.expectedTotalBytes!
-                                    //       : null,
-                                    // ),
-                                  );
-                                },
-                              ),
-                            )
-                          ],
+                                      //     CircularProgressIndicator(
+                                      //   value: loadingProgress.expectedTotalBytes !=
+                                      //           null
+                                      //       ? loadingProgress
+                                      //               .cumulativeBytesLoaded /
+                                      //           loadingProgress.expectedTotalBytes!
+                                      //       : null,
+                                      // ),
+                                    );
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: result.length,
-                ),
-              )
-            ]);
-          },
-        ),
+                      );
+                    },
+                    itemCount: result.length,
+                  ),
+                )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -184,7 +197,8 @@ class HomeHorizontalListView extends StatelessWidget {
             // print((data?.docs[0].data() as Map<String, dynamic>)['product_name']);
             return GestureDetector(
               onTap: () {
-                // DatabaseServic().getCartDetails();
+                BlocProvider.of<ProductDetailsBloc>(context)
+                    .add(const IsSizeSelected(newIndex: null));
                 BlocProvider.of<ProductDetailsBloc>(context).add(IsFav(
                   prodctName: data['product_name'],
                 ));
@@ -208,7 +222,7 @@ class HomeHorizontalListView extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                 padding: const EdgeInsets.only(left: 15, bottom: 5),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 226, 234, 246),
+                  color: const Color.fromARGB(255, 226, 234, 246),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 width: 170,

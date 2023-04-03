@@ -8,7 +8,7 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: headingAppBar(title: 'Category'),
+      appBar: headingAppBar(title: 'Category',),
       body: SafeArea(
         child: GridView(
           physics: const BouncingScrollPhysics(),

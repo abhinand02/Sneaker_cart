@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sneaker_cart/Application/Orders/orders_bloc.dart';
+import 'package:sneaker_cart/Constants/colors.dart';
 import 'package:sneaker_cart/Constants/text.dart';
-import '../../Constants/colors.dart';
 
 class OrderDetials extends StatelessWidget {
-  const OrderDetials({super.key, required this.index});
+  const OrderDetials({
+    super.key,
+    required this.index,
+  });
 
   final int index;
 
@@ -13,174 +18,139 @@ class OrderDetials extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
-        if (state.orderHistory == null) {
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
-          );
-        }
-        final data =
-            state.orderHistory!.docs[index].data() as Map<String, dynamic>;
-        final address = data['address'].toString().split(',').toList();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 80),
-                      height: 150,
-                      color: mainColor,
-                      width: double.infinity,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Order Id : ${state.orderHistory!.docs[index].id}',
-                            style: normalBlackText,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      color: Colors.transparent,
-                      width: double.infinity,
-                    ),
-                  ],
+        appBar: AppBar(
+          backgroundColor: mainColor,
+          title: const Text('Order Details'),
+
+        ),
+        body: BlocBuilder<OrdersBloc, OrdersState>(
+          builder: (context, state) {
+            if (state.orderHistory == null) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: whiteColor,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 12,
-                            color: Color.fromRGBO(0, 0, 0, 0.16),
-                          )
-                        ]),
-                    height: 80,
-                    width: width - 20,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
+              );
+            }
+            final data =
+                state.orderHistory[index].data() as Map<String, dynamic>;
+            final address = data['address'].toString().split(',').toList();
+            DateTime date = Timestamp.fromMillisecondsSinceEpoch(
+                    data['date'].millisecondsSinceEpoch)
+                .toDate();
+            String dateOnly = DateFormat('dd-MM-yyyy').format(date);
+            // print(address);
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(13.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Order',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: mainColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              state.orderHistory[index].id,
+                              style: normalBoldText,
                             ),
-                            const Text('Placed'),
-
+                            height10,
+                            Text(
+                              dateOnly,
+                              style: subBoldText,
+                            ),
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Status',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: mainColor,
-                                    fontWeight: FontWeight.bold)),
-                            Text(data['order_status']),
-                          ],
+                        Text(
+                          data['order_status'],
+                          style: statusText,
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            const Divider(),
-            ListTile(
-              title: Text(
-                data['product_name'],
-                style: mediumText,
-              ),
-              subtitle: Text(
-                'quantity: ${data['quantity']}',
-                style: smallText,
-              ),
-              trailing: Image(
-                image: NetworkImage(data['image']),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '₹${((int.parse(data['total']) - 40) / int.parse(data['quantity'])).toString().split('.').first}',
-                    style: mediumText,
-                  ),
-                  const Divider(
-                    thickness: 5,
-                  ),
-                  Text(
-                    'Shipping Details',
-                    style: mediumText,
-                  ),
                   ListTile(
-                      leading: const Icon(Icons.location_on_rounded, color: Color.fromARGB(255, 248, 113, 103),),
-                      title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(
-                              address.length,
-                              (index) => Text(
-                                    address[index],
-                                    style: smallText,
-                                    textAlign: TextAlign.left,
-                                  )))),
-                  const Divider(
-                    thickness: 5,
-                  ),
-                  Text(
-                    'Price Details',
-                    style: mediumText,
+                    title: Text(
+                      'Delivered to',
+                      style: normalText,
+                    ),
+                    subtitle: Text(
+                      data['address'].toString(),
+                      style: normalBoldText,
+                    ),
                   ),
                   height20,
-                  priceDetails(
-                      title: 'Price',
-                      value:
-                          '₹${((int.parse(data['total']) - 40) / int.parse(data['quantity'])).toString().split('.').first}'),
-                  priceDetails(title: 'Quantity', value: data['quantity']),
-                  priceDetails(title: 'Total', value: '₹${data['total']}'),
+                  const Divider(),
+                  Column(
+                    children: List.generate(
+                      data['order'].length,
+                      (index) => ListTile(
+                        leading: Image(
+                          image: NetworkImage(data['order'][index]['image']),
+                        ),
+                        title: Text(
+                          '${data['order'][index]['product_name']}  x${data['order'][index]['quantity']}',
+                          style: normalText,
+                        ),
+                        trailing: Text(
+                          '₹${int.parse(data['order'][index]['total']) * int.parse(data['order'][index]['quantity'])}',
+                          style: normalBoldText,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 2,
+                    endIndent: 10,
+                    indent: 10,
+                  ),
+                  ListTile(
+                      title: Text(
+                        'item total',
+                        style: normalText,
+                      ),
+                      trailing: Text(
+                        (int.parse(data['total_price']) - 40).toString(),
+                        style: normalText,
+                      ),
+                      dense: true,
+                      visualDensity:
+                          const VisualDensity(horizontal: 0, vertical: -4)),
+                  ListTile(
+                      title: Text('Shipping charge', style: normalText),
+                      trailing: Text('₹40', style: normalText),
+                      dense: true,
+                      visualDensity:
+                          const VisualDensity(horizontal: 0, vertical: -4)),
+                  ListTile(
+                    title: Text('total', style: normalText),
+                    trailing:
+                        Text('₹${data['total_price']}', style: normalText),
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    dense: true,
+                  ),
                 ],
               ),
-            ),
-          ],
-        );
-      }),
-    );
-  }
-
-  Padding priceDetails({required String title, required value}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: normalText),
-          Text(
-            value,
-            style: normalText,
-          )
-        ],
-      ),
-    );
+            );
+          },
+        ));
   }
 }
 
+Padding priceDetails({required String title, required value}) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title, style: normalText),
+        Text(
+          value,
+          style: normalText,
+        )
+      ],
+    ),
+  );
+}

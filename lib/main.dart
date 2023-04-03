@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sneaker_cart/Application/BottomNavBar/bottom_nav_bar_bloc.dart';
 import 'package:sneaker_cart/Application/Cart/cart_bloc.dart';
 import 'package:sneaker_cart/Application/Checkout/checkout_bloc.dart';
 import 'package:sneaker_cart/Application/Home/home_bloc.dart';
@@ -17,6 +19,7 @@ import 'Application/Category/category_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseMessaging.instance.getInitialMessage();
   runApp(const MyApp());
 }
 
@@ -35,6 +38,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrdersBloc()),
         BlocProvider(create: (context) => CategoryBloc()),
         BlocProvider(create: (context) => LazyLoadingBloc()),
+        BlocProvider(create: (context) => BottomNavBarBloc()),
       ],
       child: MaterialApp(
         initialRoute: FirebaseAuth.instance.currentUser == null

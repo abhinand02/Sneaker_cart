@@ -7,7 +7,7 @@ import 'widgets/profile_widget.dart';
 import 'widgets/signout_widget.dart';
 
 class MenuItems {
-  static const home = MenuITEM('Home', Iconsax.home);
+  static const home = MenuITEM('Home', Iconsax.home,);
   static const accountAndSettings =
       MenuITEM('Account & Settings', Iconsax.profile_tick);
   static const myCart = MenuITEM('MyCart', Iconsax.bag_24);

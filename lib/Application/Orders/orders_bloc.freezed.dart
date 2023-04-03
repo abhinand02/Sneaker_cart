@@ -166,7 +166,7 @@ abstract class GetOrderHistory implements OrdersEvent {
 
 /// @nodoc
 mixin _$OrdersState {
-  QuerySnapshot<Object?>? get orderHistory =>
+  List<QueryDocumentSnapshot<Object?>> get orderHistory =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -180,7 +180,7 @@ abstract class $OrdersStateCopyWith<$Res> {
           OrdersState value, $Res Function(OrdersState) then) =
       _$OrdersStateCopyWithImpl<$Res, OrdersState>;
   @useResult
-  $Res call({QuerySnapshot<Object?>? orderHistory});
+  $Res call({List<QueryDocumentSnapshot<Object?>> orderHistory});
 }
 
 /// @nodoc
@@ -196,13 +196,13 @@ class _$OrdersStateCopyWithImpl<$Res, $Val extends OrdersState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? orderHistory = freezed,
+    Object? orderHistory = null,
   }) {
     return _then(_value.copyWith(
-      orderHistory: freezed == orderHistory
+      orderHistory: null == orderHistory
           ? _value.orderHistory
           : orderHistory // ignore: cast_nullable_to_non_nullable
-              as QuerySnapshot<Object?>?,
+              as List<QueryDocumentSnapshot<Object?>>,
     ) as $Val);
   }
 }
@@ -214,7 +214,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $OrdersStateCopyWith<$Res> {
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({QuerySnapshot<Object?>? orderHistory});
+  $Res call({List<QueryDocumentSnapshot<Object?>> orderHistory});
 }
 
 /// @nodoc
@@ -227,13 +227,13 @@ class __$$_InitialCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? orderHistory = freezed,
+    Object? orderHistory = null,
   }) {
     return _then(_$_Initial(
-      orderHistory: freezed == orderHistory
-          ? _value.orderHistory
+      orderHistory: null == orderHistory
+          ? _value._orderHistory
           : orderHistory // ignore: cast_nullable_to_non_nullable
-              as QuerySnapshot<Object?>?,
+              as List<QueryDocumentSnapshot<Object?>>,
     ));
   }
 }
@@ -241,10 +241,17 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial({required this.orderHistory});
+  const _$_Initial(
+      {required final List<QueryDocumentSnapshot<Object?>> orderHistory})
+      : _orderHistory = orderHistory;
 
+  final List<QueryDocumentSnapshot<Object?>> _orderHistory;
   @override
-  final QuerySnapshot<Object?>? orderHistory;
+  List<QueryDocumentSnapshot<Object?>> get orderHistory {
+    if (_orderHistory is EqualUnmodifiableListView) return _orderHistory;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_orderHistory);
+  }
 
   @override
   String toString() {
@@ -256,12 +263,13 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            (identical(other.orderHistory, orderHistory) ||
-                other.orderHistory == orderHistory));
+            const DeepCollectionEquality()
+                .equals(other._orderHistory, _orderHistory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, orderHistory);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_orderHistory));
 
   @JsonKey(ignore: true)
   @override
@@ -272,10 +280,11 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements OrdersState {
   const factory _Initial(
-      {required final QuerySnapshot<Object?>? orderHistory}) = _$_Initial;
+          {required final List<QueryDocumentSnapshot<Object?>> orderHistory}) =
+      _$_Initial;
 
   @override
-  QuerySnapshot<Object?>? get orderHistory;
+  List<QueryDocumentSnapshot<Object?>> get orderHistory;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>

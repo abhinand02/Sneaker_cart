@@ -52,12 +52,12 @@ class TextForm extends StatelessWidget {
                   obscuringCharacter: '●',
                   // autovalidateMode: AutovalidateMode.onUserInteraction,
                   onChanged: (value) {
-                    print(value);
+                    // print(value);
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter Your $errorMessage1';
-                    } else if (!regExp.hasMatch(value)) {
+                    } else if (!regExp.hasMatch(value.trim())) {
                       return errorMessage2;
                     } else {
                       return null;

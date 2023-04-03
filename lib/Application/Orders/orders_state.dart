@@ -3,10 +3,10 @@ part of 'orders_bloc.dart';
 @freezed
 class OrdersState with _$OrdersState {
   const factory OrdersState({
-    required QuerySnapshot<Object?>? orderHistory,
+    required List<QueryDocumentSnapshot<Object?>> orderHistory,
   }) = _Initial;
 
   factory OrdersState.initial(){
-    return  const OrdersState(orderHistory: null);
+    return   const OrdersState(orderHistory: []);
   }
 }

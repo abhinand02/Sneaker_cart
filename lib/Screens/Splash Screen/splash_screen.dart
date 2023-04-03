@@ -24,6 +24,6 @@ class SplashScreen extends StatelessWidget {
     );
   }
     Timer goToNext(context){
-   return Timer(const Duration(seconds:2), ()=> Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>  LoginPage())));
+   return Timer(const Duration(seconds:2), ()=> Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>  OnBoardingScreen())));
   }
 }
