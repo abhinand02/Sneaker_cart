@@ -1,0 +1,32 @@
+workflows:
+  android-workflow-id:
+      name: sneaker cart
+      max_build_duration: 100
+      instance_type: mac_mini_m1
+      environment:
+        flutter: 3.7.12
+        android_signing:
+          - keystore_reference
+      scripts:
+        - name: Set up local.properties
+          script: |
+            echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+        - name:  Get Flutter packages
+          script: |
+            flutter packages pub get
+        - name: Build APK with Flutter
+          script: |
+            flutter build apk --release
+      artifacts:
+          - build/**/outputs/**/*.apk
+          - build/**/outputs/**/mapping.txt
+          - flutter_drive.log    
+      publishing: 
+        email: 
+          recipients:
+            - abhinand.madhu@expereal.org
+          notify: 
+             success: true
+             failure: true      
+
+

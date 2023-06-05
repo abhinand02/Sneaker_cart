@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         title: 'Sneaker Cart',
         routes: {
           const SplashScreen().id: (context) => const SplashScreen(),
-          const BottomNavBar().id: (context) => const BottomNavBar()
+          const BottomNavBar().id: (context) => const BottomNavBar(),
         },
         theme: ThemeData(
           // scaffoldBackgroundColor: backGroundColor,

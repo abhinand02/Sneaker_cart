@@ -57,106 +57,104 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Flexible(
-                  child: ListView.builder(    
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final data = result[index].data() as Map<String, dynamic>;
-                      return GestureDetector(
-                        onTap: () {
-                          DatabaseServic().getOrders();
-                          BlocProvider.of<ProductDetailsBloc>(context)
-                              .add(IsFav(
-                            prodctName: data['product_name'],
-                          ));
-                          BlocProvider.of<ProductDetailsBloc>(context).add(
-                              ChangeImage(
-                                  index: 0, productname: data['product_name']));
-                          BlocProvider.of<ProductDetailsBloc>(context).add(
-                              GetProductDetail(
-                                  productname: data['product_name']));
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProductDetailsScreen(
-                                category: data['category'],
-                              ),
+                ListView.builder(    
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final data = result[index].data() as Map<String, dynamic>;
+                    return GestureDetector(
+                      onTap: () {
+                        DatabaseServic().getOrders();
+                        BlocProvider.of<ProductDetailsBloc>(context)
+                            .add(IsFav(
+                          prodctName: data['product_name'],
+                        ));
+                        BlocProvider.of<ProductDetailsBloc>(context).add(
+                            ChangeImage(
+                                index: 0, productname: data['product_name']));
+                        BlocProvider.of<ProductDetailsBloc>(context).add(
+                            GetProductDetail(
+                                productname: data['product_name']));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsScreen(
+                              category: data['category'],
                             ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          padding: const EdgeInsets.only(left: 10),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: width / 2,
-                                    child: Text(
-                                      data['product_name'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: normalText,
-                                    ),
-                                  ),
-                                  height10,
-                                  Text(
-                                    '₹${data['actualPrice']}',
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: width / 2,
+                                  child: Text(
+                                    data['product_name'],
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style: normalText,
                                   ),
-                                ],
-                              ),
-                              SizedBox(
+                                ),
+                                height10,
+                                Text(
+                                  '₹${data['actualPrice']}',
+                                  style: normalText,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 150,
+                              height: 120,
+                              child: Image.network(
+                                data['image'][0],
                                 width: 150,
                                 height: 120,
-                                child: Image.network(
-                                  data['image'][0],
-                                  width: 150,
-                                  height: 120,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Text(
-                                        'failed to load resource');
-                                  },
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Lottie.asset(
-                                          'assets/images/simple-lazy-load.json',
-                                          fit: BoxFit.cover,
-                                          width: 120,
-                                          height: 110,
-                                        ),
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Text(
+                                      'failed to load resource');
+                                },
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Lottie.asset(
+                                        'assets/images/simple-lazy-load.json',
+                                        fit: BoxFit.cover,
+                                        width: 120,
+                                        height: 110,
                                       ),
-                                      //     CircularProgressIndicator(
-                                      //   value: loadingProgress.expectedTotalBytes !=
-                                      //           null
-                                      //       ? loadingProgress
-                                      //               .cumulativeBytesLoaded /
-                                      //           loadingProgress.expectedTotalBytes!
-                                      //       : null,
-                                      // ),
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
+                                    ),
+                                    //     CircularProgressIndicator(
+                                    //   value: loadingProgress.expectedTotalBytes !=
+                                    //           null
+                                    //       ? loadingProgress
+                                    //               .cumulativeBytesLoaded /
+                                    //           loadingProgress.expectedTotalBytes!
+                                    //       : null,
+                                    // ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
                         ),
-                      );
-                    },
-                    itemCount: result.length,
-                  ),
+                      ),
+                    );
+                  },
+                  itemCount: result.length,
                 )
               ],
             ),

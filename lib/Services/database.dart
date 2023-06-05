@@ -128,9 +128,10 @@ class DatabaseServic {
             await auth.signInWithCredential(credential);
 
         currentUser = userCredential.user;
+        // ignore: use_build_context_synchronously
         storeUserData(
             name: googleSignInAccount.displayName,
-            email: googleSignInAccount.email);
+            email: googleSignInAccount.email,context: context);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const BottomNavBar()),
             (route) => false);
@@ -143,7 +144,7 @@ class DatabaseServic {
           // handle the error here
         }
       } catch (e) {
-        // handle the error here
+        print(e.toString());
       }
     }
     BlocProvider.of<LazyLoadingBloc>(context)
@@ -155,7 +156,7 @@ class DatabaseServic {
   storeUserData({name, password, email, context}) async {
     try {
       DocumentReference store = usersCollection.doc(currentUser!.uid);
-      store.set({
+     await store.set({
         'name': name,
         'password': password,
         'email': email,
@@ -163,14 +164,14 @@ class DatabaseServic {
       }).then((value) {
         BlocProvider.of<LazyLoadingBloc>(context)
             .add(const started(loadingValue: false));
-        return Navigator.of(context).pushAndRemoveUntil(
+        return Navigator.of(context,).pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => LoginPage(),
             ),
             (route) => false);
       });
     } catch (e) {
-      BlocProvider.of<LazyLoadingBloc>(context).add(const started(loadingValue: false),);
+      BlocProvider.of<LazyLoadingBloc>(context,).add(const started(loadingValue: false),);
     }
   }
 
@@ -279,7 +280,7 @@ class DatabaseServic {
       });
     } catch (e) {
       final snackbar = SnackBar(
-        content: Text(
+        content: Text( 
           e.toString(),
         ),
       );
