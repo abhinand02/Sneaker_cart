@@ -16,7 +16,7 @@ import 'package:sneaker_cart/Screens/Splash%20Screen/splash_screen.dart';
 import 'package:sneaker_cart/Widgets/bottom_nav_bar.dart';
 import 'Application/Category/category_bloc.dart';
 
-void main() async {
+void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getInitialMessage();
