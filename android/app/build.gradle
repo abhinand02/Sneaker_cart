@@ -91,6 +91,7 @@ android {
     }
     namespace "in.abhinand.sneaker_cart"
 }
+}
 
 flutter {
     source '../..'
